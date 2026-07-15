@@ -112,11 +112,11 @@ function OrbitRings({ color }: { color: string }) {
   return (
     <group ref={groupRef}>
       <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[1.35, 0.015, 8, 48]} />
+        <torusGeometry args={[1.22, 0.012, 8, 48]} />
         <meshBasicMaterial color={color} transparent opacity={0.25} />
       </mesh>
       <mesh rotation={[Math.PI / 4, Math.PI / 4, 0]}>
-        <torusGeometry args={[1.45, 0.01, 8, 48]} />
+        <torusGeometry args={[1.32, 0.008, 8, 48]} />
         <meshBasicMaterial color={color} transparent opacity={0.15} />
       </mesh>
     </group>
@@ -130,7 +130,7 @@ export function StreakOrbScene({ strengthLevel, maxStreak, activeHabitsCount }: 
     <div className="relative w-full h-full">
       <Canvas
         dpr={getCappedDPR()}
-        camera={{ position: [0, 0, 3.2], fov: 45 }}
+        camera={{ position: [0, 0, 3.85], fov: 45 }}
         style={{ background: "transparent" }}
         gl={{ antialias: true, alpha: true }}
       >

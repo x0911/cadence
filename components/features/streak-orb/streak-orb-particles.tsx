@@ -30,7 +30,7 @@ export function StreakOrbParticles({ color, count = 60 }: StreakOrbParticlesProp
       // Spawn scattered on a sphere surface initially
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(Math.random() * 2 - 1);
-      const radius = 1.0 + Math.random() * 0.4; // just outside the 3D orb
+      const radius = 1.0 + Math.random() * 0.25; // just outside the 3D orb
 
       const pos = new THREE.Vector3(
         radius * Math.sin(phi) * Math.cos(theta),
@@ -39,7 +39,7 @@ export function StreakOrbParticles({ color, count = 60 }: StreakOrbParticlesProp
       );
 
       // Float slowly outward and upward
-      const vel = pos.clone().normalize().multiplyScalar(0.15).add(new THREE.Vector3(0, 0.1, 0));
+      const vel = pos.clone().normalize().multiplyScalar(0.08).add(new THREE.Vector3(0, 0.08, 0));
       const maxLife = 1.5 + Math.random() * 1.5;
 
       tempParticles.push({
@@ -73,7 +73,7 @@ export function StreakOrbParticles({ color, count = 60 }: StreakOrbParticlesProp
           1.0 * Math.sin(phi) * Math.sin(theta),
           1.0 * Math.cos(phi)
         );
-        p.vel.copy(p.pos).normalize().multiplyScalar(0.15).add(new THREE.Vector3(0, 0.15, 0));
+        p.vel.copy(p.pos).normalize().multiplyScalar(0.08).add(new THREE.Vector3(0, 0.08, 0));
         p.life = 0;
       }
 

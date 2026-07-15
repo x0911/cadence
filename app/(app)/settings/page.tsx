@@ -6,8 +6,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { Select as UISelect, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Select as UISelect,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, Save, Globe, Eye, Mail, User, Loader2 } from "lucide-react";
 import Link from "next/link";
@@ -15,18 +28,34 @@ import Link from "next/link";
 // Common timezones to choose from
 const POPULAR_TIMEZONES = [
   { value: "UTC", label: "UTC (Coordinated Universal Time)" },
-  { value: "Europe/London", label: "Europe/London (GMT/BST)" },
-  { value: "Europe/Paris", label: "Europe/Paris (CET/CEST)" },
-  { value: "Europe/Moscow", label: "Europe/Moscow (MSK)" },
+  { value: "Africa/Cairo", label: "Africa/Cairo (EET)" },
+  { value: "Africa/Johannesburg", label: "Africa/Johannesburg (SAST)" },
+  { value: "Africa/Lagos", label: "Africa/Lagos (WAT)" },
   { value: "America/New_York", label: "America/New_York (EST/EDT)" },
   { value: "America/Chicago", label: "America/Chicago (CST/CDT)" },
   { value: "America/Denver", label: "America/Denver (MST/MDT)" },
   { value: "America/Los_Angeles", label: "America/Los_Angeles (PST/PDT)" },
+  { value: "America/Mexico_City", label: "America/Mexico_City (CST/CDT)" },
+  { value: "America/Sao_Paulo", label: "America/Sao_Paulo (BRT)" },
+  { value: "America/Toronto", label: "America/Toronto (EST/EDT)" },
+  { value: "America/Vancouver", label: "America/Vancouver (PST/PDT)" },
+  { value: "Asia/Kolkata", label: "Asia/Kolkata (IST)" },
+  { value: "Asia/Singapore", label: "Asia/Singapore (SGT)" },
+  { value: "Asia/Hong_Kong", label: "Asia/Hong_Kong (HKT)" },
+  { value: "Asia/Seoul", label: "Asia/Seoul (KST)" },
   { value: "Asia/Tokyo", label: "Asia/Tokyo (JST)" },
   { value: "Asia/Shanghai", label: "Asia/Shanghai (CST)" },
-  { value: "Asia/Kolkata", label: "Asia/Kolkata (IST)" },
+  { value: "Asia/Jakarta", label: "Asia/Jakarta (WIB)" },
   { value: "Asia/Dubai", label: "Asia/Dubai (GST)" },
+  { value: "Europe/London", label: "Europe/London (GMT/BST)" },
+  { value: "Europe/Paris", label: "Europe/Paris (CET/CEST)" },
+  { value: "Europe/Berlin", label: "Europe/Berlin (CET/CEST)" },
+  { value: "Europe/Rome", label: "Europe/Rome (CET/CEST)" },
+  { value: "Europe/Madrid", label: "Europe/Madrid (CET/CEST)" },
+  { value: "Europe/Moscow", label: "Europe/Moscow (MSK)" },
+  { value: "Europe/Istanbul", label: "Europe/Istanbul (TRT)" },
   { value: "Australia/Sydney", label: "Australia/Sydney (AEST/AEDT)" },
+  { value: "Pacific/Auckland", label: "Pacific/Auckland (NZST/NZDT)" },
 ];
 
 export default function SettingsPage() {
@@ -81,19 +110,28 @@ export default function SettingsPage() {
   const handleAutodetectTimezone = () => {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
     if (tz) {
-      setTimezone(tz);
-      toast({
-        title: "Timezone Detected",
-        description: `Set to: ${tz}`,
-      });
+      const isSupported = POPULAR_TIMEZONES.some((item) => item.value === tz);
+      if (isSupported) {
+        setTimezone(tz);
+        toast({
+          title: "Timezone Detected",
+          description: `Set to: ${tz}`,
+        });
+      } else {
+        toast({
+          title: "Unsupported Timezone",
+          description: `Your local timezone (${tz}) is not in the supported list. Please select a supported timezone manually.`,
+          variant: "destructive",
+        });
+      }
     }
   };
 
   if (isProfileLoading) {
     return (
       <div className="min-h-screen bg-[#FAFAFA] pb-16">
-        <header className="border-b border-border/80 bg-white/80 backdrop-blur-md py-4 px-4">
-          <div className="mx-auto max-w-2xl flex items-center gap-3">
+        <header className="border-border/80 border-b bg-white/80 px-4 py-4 backdrop-blur-md">
+          <div className="mx-auto flex max-w-2xl items-center gap-3">
             <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
             <span className="font-heading text-lg font-bold">Loading Settings...</span>
           </div>
@@ -101,12 +139,12 @@ export default function SettingsPage() {
         <main className="mx-auto max-w-2xl px-4 pt-8">
           <Card className="border-border">
             <CardHeader className="space-y-2">
-              <div className="h-6 w-1/3 bg-muted rounded animate-pulse" />
-              <div className="h-4 w-2/3 bg-muted rounded animate-pulse" />
+              <div className="h-6 w-1/3 animate-pulse rounded bg-muted" />
+              <div className="h-4 w-2/3 animate-pulse rounded bg-muted" />
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="h-10 w-full bg-muted rounded animate-pulse" />
-              <div className="h-10 w-full bg-muted rounded animate-pulse" />
+              <div className="h-10 w-full animate-pulse rounded bg-muted" />
+              <div className="h-10 w-full animate-pulse rounded bg-muted" />
             </CardContent>
           </Card>
         </main>
@@ -117,13 +155,13 @@ export default function SettingsPage() {
   return (
     <div className="min-h-screen bg-[#FAFAFA] pb-16">
       {/* Settings Navigation Header */}
-      <header className="sticky top-0 z-40 border-b border-border/80 bg-white/80 backdrop-blur-md">
+      <header className="border-border/80 sticky top-0 z-40 border-b bg-white/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-2xl items-center gap-3 px-4 py-4">
           <Link href="/dashboard">
             <Button
               variant="ghost"
               size="icon"
-              className="h-9 w-9 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl"
+              className="h-9 w-9 rounded-xl text-muted-foreground hover:bg-muted hover:text-foreground"
             >
               <ArrowLeft className="h-5 w-5" />
               <span className="sr-only">Back to Dashboard</span>
@@ -137,7 +175,7 @@ export default function SettingsPage() {
 
       <main className="mx-auto max-w-2xl px-4 pt-8">
         <form onSubmit={handleSave}>
-          <Card className="border-border bg-card shadow-sm rounded-2xl overflow-hidden font-body">
+          <Card className="overflow-hidden rounded-2xl border-border bg-card font-body shadow-sm">
             <CardHeader>
               <CardTitle className="font-heading text-2xl font-bold tracking-tight">
                 Profile Customization
@@ -150,8 +188,11 @@ export default function SettingsPage() {
             <CardContent className="space-y-6">
               {/* Display Name */}
               <div className="space-y-2">
-                <Label htmlFor="display-name" className="text-xs font-semibold text-foreground flex items-center gap-1.5">
-                  <User className="h-4 w-4 text-muted-foreground/80" />
+                <Label
+                  htmlFor="display-name"
+                  className="flex items-center gap-1.5 text-xs font-semibold text-foreground"
+                >
+                  <User className="text-muted-foreground/80 h-4 w-4" />
                   Display Name
                 </Label>
                 <Input
@@ -161,20 +202,23 @@ export default function SettingsPage() {
                   onChange={(e) => setDisplayName(e.target.value)}
                   disabled={isUpdating}
                   maxLength={50}
-                  className="rounded-xl border-border/80"
+                  className="border-border/80 rounded-xl"
                 />
               </div>
 
               {/* Timezone Selector */}
               <div className="space-y-2">
-                <Label htmlFor="timezone" className="text-xs font-semibold text-foreground flex items-center gap-1.5">
-                  <Globe className="h-4 w-4 text-muted-foreground/80" />
+                <Label
+                  htmlFor="timezone"
+                  className="flex items-center gap-1.5 text-xs font-semibold text-foreground"
+                >
+                  <Globe className="text-muted-foreground/80 h-4 w-4" />
                   Timezone
                 </Label>
                 <div className="flex gap-2">
                   <div className="flex-1">
                     <UISelect value={timezone} onValueChange={setTimezone} disabled={isUpdating}>
-                      <SelectTrigger id="timezone" className="rounded-xl border-border/80">
+                      <SelectTrigger id="timezone" className="border-border/80 rounded-xl">
                         <SelectValue placeholder="Select timezone" />
                       </SelectTrigger>
                       <SelectContent className="rounded-xl font-body">
@@ -195,7 +239,7 @@ export default function SettingsPage() {
                     variant="outline"
                     onClick={handleAutodetectTimezone}
                     disabled={isUpdating}
-                    className="rounded-xl border-border/80 hover:bg-muted font-semibold"
+                    className="border-border/80 rounded-xl font-semibold hover:bg-muted hover:text-slate-900"
                   >
                     Autodetect
                   </Button>
@@ -205,17 +249,21 @@ export default function SettingsPage() {
                 </p>
               </div>
 
-              <div className="border-t border-border/60 my-4" />
+              <div className="border-border/60 my-4 border-t" />
 
               {/* 3D Visuals Switch */}
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <Label htmlFor="visuals-3d" className="text-sm font-semibold text-foreground flex items-center gap-1.5">
-                    <Eye className="h-4 w-4 text-muted-foreground/80" />
+                  <Label
+                    htmlFor="visuals-3d"
+                    className="flex items-center gap-1.5 text-sm font-semibold text-foreground"
+                  >
+                    <Eye className="text-muted-foreground/80 h-4 w-4" />
                     Premium 3D Visuals
                   </Label>
-                  <p className="text-xs text-muted-foreground max-w-[420px]">
-                    Turn on the 3D rendering of the Streak Orb. If turned off, falls back to a clean vector shape. Disable on older devices to save battery.
+                  <p className="max-w-[420px] text-xs text-muted-foreground">
+                    Turn on the 3D rendering of the Streak Orb. If turned off, falls back to a clean
+                    vector shape. Disable on older devices to save battery.
                   </p>
                 </div>
                 <Switch
@@ -226,17 +274,21 @@ export default function SettingsPage() {
                 />
               </div>
 
-              <div className="border-t border-border/60 my-4" />
+              <div className="border-border/60 my-4 border-t" />
 
               {/* Weekly Email Switch */}
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <Label htmlFor="weekly-email" className="text-sm font-semibold text-foreground flex items-center gap-1.5">
-                    <Mail className="h-4 w-4 text-muted-foreground/80" />
+                  <Label
+                    htmlFor="weekly-email"
+                    className="flex items-center gap-1.5 text-sm font-semibold text-foreground"
+                  >
+                    <Mail className="text-muted-foreground/80 h-4 w-4" />
                     Weekly Progress Emails
                   </Label>
-                  <p className="text-xs text-muted-foreground max-w-[420px]">
-                    Receive an email recap every Sunday summarizing completions, milestones achieved, and focus sessions completed.
+                  <p className="max-w-[420px] text-xs text-muted-foreground">
+                    Receive an email recap every Sunday summarizing completions, milestones
+                    achieved, and focus sessions completed.
                   </p>
                 </div>
                 <Switch
@@ -248,11 +300,11 @@ export default function SettingsPage() {
               </div>
             </CardContent>
 
-            <CardFooter className="bg-muted/30 border-t border-border/60 px-6 py-4 flex justify-end">
+            <CardFooter className="bg-muted/30 border-border/60 flex justify-end border-t px-6 py-4">
               <Button
                 type="submit"
                 disabled={isUpdating}
-                className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-xl flex items-center gap-1.5"
+                className="hover:bg-accent/90 flex items-center gap-1.5 rounded-xl bg-accent font-semibold text-accent-foreground"
               >
                 {isUpdating ? (
                   <>
