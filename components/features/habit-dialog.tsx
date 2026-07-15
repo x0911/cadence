@@ -156,7 +156,7 @@ export function HabitDialog() {
 
   return (
     <Dialog open={isCreateHabitOpen} onOpenChange={(open) => !open && handleClose()}>
-      <DialogContent className="max-h-[92dvh] w-full max-w-md overflow-y-auto rounded-t-2xl border-border bg-card font-body sm:rounded-2xl">
+      <DialogContent className="max-h-[92dvh] w-full max-w-md overflow-y-auto rounded-t-2xl border-border bg-card text-foreground font-body sm:rounded-2xl">
         <DialogHeader>
           <DialogTitle className="font-heading text-2xl font-bold tracking-tight">
             {editingHabitId ? "Edit Habit" : "Create New Habit"}
@@ -344,7 +344,7 @@ export function HabitDialog() {
                 variant="outline"
                 onClick={handleClose}
                 disabled={isPending}
-                className="border-border/80 rounded-xl font-semibold hover:bg-muted hover:text-slate-900"
+                className="border-border/80 rounded-xl font-semibold hover:bg-muted hover:text-foreground"
               >
                 Cancel
               </Button>

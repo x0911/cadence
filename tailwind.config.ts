@@ -56,6 +56,9 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      boxShadow: {
+        glow: "var(--shadow-glow)",
+      },
       keyframes: {
         "pop-in": {
           "0%": { transform: "scale(0.9)", opacity: "0" },
@@ -74,12 +77,22 @@ const config: Config = {
           "0%, 100%": { transform: "scale(1)", opacity: "0.6" },
           "50%": { transform: "scale(1.15)", opacity: "0" },
         },
+        "star-movement-bottom": {
+          "0%": { transform: "translate(0%, 0%)", opacity: "1" },
+          "100%": { transform: "translate(-100%, 0%)", opacity: "0" },
+        },
+        "star-movement-top": {
+          "0%": { transform: "translate(0%, 0%)", opacity: "1" },
+          "100%": { transform: "translate(100%, 0%)", opacity: "0" },
+        },
       },
       animation: {
         "pop-in": "pop-in 0.3s ease-out forwards",
         "fade-up": "fade-up 0.4s ease-out forwards",
         shimmer: "shimmer 2s linear infinite",
         "pulse-ring": "pulse-ring 1.5s ease-out infinite",
+        "star-movement-bottom": "star-movement-bottom linear infinite alternate",
+        "star-movement-top": "star-movement-top linear infinite alternate",
       },
     },
   },

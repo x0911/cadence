@@ -6,7 +6,8 @@ import { CheckInButton } from "./check-in-button";
 import { HabitIcon } from "@/components/ui/habit-icon";
 import { resolveColor, type HabitColorToken } from "@/lib/palette";
 import { StreakBadge } from "./streak-badge";
-import { Card, CardContent } from "@/components/ui/card";
+import { CardContent } from "@/components/ui/card";
+import SpotlightCard from "@/components/react-bits/components/SpotlightCard";
 import { Button } from "@/components/ui/button";
 import { useUIStore } from "@/store/ui-store";
 import { Edit2, MoreVertical, Trash2 } from "lucide-react";
@@ -83,9 +84,10 @@ export function HabitCard({ habit, timezone, onMilestoneCrossed }: HabitCardProp
   };
 
   return (
-    <Card
+    <SpotlightCard
       onClick={handleCardClick}
-      className="border-border/80 hover:border-accent/15 group relative cursor-pointer overflow-hidden rounded-2xl bg-card transition-all duration-200 hover:shadow-md"
+      spotlightColor={`${colorHex}25`}
+      className="p-0 border-border/80 hover:border-accent/15 group relative cursor-pointer overflow-hidden rounded-2xl bg-card transition-all duration-200 hover:shadow-md"
     >
       {/* Decorative accent top border line on hover */}
       <div
@@ -173,6 +175,6 @@ export function HabitCard({ habit, timezone, onMilestoneCrossed }: HabitCardProp
           </DropdownMenu>
         </div>
       </CardContent>
-    </Card>
+    </SpotlightCard>
   );
 }

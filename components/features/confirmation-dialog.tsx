@@ -42,7 +42,7 @@ export function ConfirmationDialog() {
         <AlertDialogFooter className="sm:space-x-2">
           <AlertDialogCancel
             onClick={handleCancel}
-            className="border-border/80 rounded-xl font-semibold hover:bg-muted hover:text-slate-900"
+            className="border-border/80 rounded-xl font-semibold hover:bg-muted hover:text-foreground"
           >
             {confirmOptions?.cancelLabel || "Cancel"}
           </AlertDialogCancel>

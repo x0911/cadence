@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -16,8 +16,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Flame, Mail, Lock, Loader2, Sparkles } from "lucide-react";
+import Link from "next/link";
+import Aurora from "@/components/react-bits/backgrounds/Aurora";
+import BlurText from "@/components/react-bits/text/BlurText";
+import { prefersReducedMotion, isLowEndDevice } from "@/lib/device";
 
 export default function LoginPage() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isMagicLink, setIsMagicLink] = useState(false);
@@ -120,22 +128,48 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center bg-[#FAFAFA] px-4 py-12">
+    <main className="relative flex min-h-screen flex-col items-center justify-center bg-background px-4 py-12">
       {/* Background visual detail */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="bg-accent/5 absolute -left-[10%] -top-[40%] h-[80%] w-[50%] rounded-full blur-[120px]" />
-        <div className="bg-accent/5 absolute -bottom-[40%] -right-[10%] h-[80%] w-[50%] rounded-full blur-[120px]" />
-      </div>
+      {mounted && !prefersReducedMotion() && !isLowEndDevice() ? (
+        <div
+          className="absolute inset-0 -z-10 overflow-hidden"
+          style={{
+            maskImage: "radial-gradient(circle at center, black 25%, transparent 75%)",
+            WebkitMaskImage: "radial-gradient(circle at center, black 25%, transparent 75%)",
+          }}
+        >
+          <Aurora amplitude={0.5} speed={0.4} />
+        </div>
+      ) : (
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <div className="absolute -left-[10%] -top-[40%] h-[80%] w-[50%] rounded-full bg-accent/5 blur-[120px]" />
+          <div className="absolute -bottom-[40%] -right-[10%] h-[80%] w-[50%] rounded-full bg-accent/5 blur-[120px]" />
+        </div>
+      )}
 
       <div className="w-full max-w-md space-y-6">
         {/* Confident logo design */}
         <div className="flex flex-col items-center space-y-2 text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-accent text-accent-foreground shadow-md transition-transform hover:scale-105">
-            <Flame className="h-6 w-6" />
-          </div>
-          <h1 className="font-heading text-4xl font-extrabold tracking-tight text-foreground">
-            Cadence
-          </h1>
+          <Link href="/">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-accent text-accent-foreground shadow-md transition-transform hover:scale-105">
+              <Flame className="h-6 w-6" />
+            </div>
+          </Link>
+          <Link href="/">
+            {mounted && !prefersReducedMotion() ? (
+              <BlurText
+                text="Cadence"
+                delay={150}
+                animateBy="letters"
+                direction="top"
+                className="font-heading text-4xl font-extrabold tracking-tight text-foreground"
+              />
+            ) : (
+              <h1 className="font-heading text-4xl font-extrabold tracking-tight text-foreground">
+                Cadence
+              </h1>
+            )}
+          </Link>
           <p className="max-w-xs text-balance font-body text-sm text-muted-foreground">
             Your consistency, beautifully tracked. Establish streaks, hit milestones.
           </p>
@@ -159,7 +193,7 @@ export default function LoginPage() {
                   Email Address
                 </Label>
                 <div className="relative">
-                  <Mail className="h-4.5 w-4.5 text-muted-foreground/60 absolute left-3 top-2.5" />
+                  <Mail className="h-4.5 w-4.5 absolute left-3 top-2.5 text-muted-foreground/60" />
                   <Input
                     id="email"
                     type="email"
@@ -184,7 +218,7 @@ export default function LoginPage() {
                     </Label>
                   </div>
                   <div className="relative">
-                    <Lock className="h-4.5 w-4.5 text-muted-foreground/60 absolute left-3 top-2.5" />
+                    <Lock className="h-4.5 w-4.5 absolute left-3 top-2.5 text-muted-foreground/60" />
                     <Input
                       id="password"
                       type="password"
@@ -201,7 +235,7 @@ export default function LoginPage() {
 
               <Button
                 type="submit"
-                className="hover:bg-accent/90 w-full bg-accent font-body font-semibold text-accent-foreground"
+                className="w-full bg-accent font-body font-semibold text-accent-foreground hover:bg-accent/90"
                 disabled={loading || demoLoading}
               >
                 {loading ? (
@@ -231,7 +265,7 @@ export default function LoginPage() {
             <Button
               variant="outline"
               type="button"
-              className="w-full border-border font-body font-semibold hover:bg-muted hover:text-slate-900"
+              className="w-full border-border font-body font-semibold hover:bg-muted hover:text-foreground"
               disabled={loading || demoLoading}
               onClick={() => setIsMagicLink(!isMagicLink)}
             >
@@ -240,7 +274,7 @@ export default function LoginPage() {
           </CardContent>
 
           <CardFooter className="flex flex-col space-y-4 pt-0">
-            <span className="border-border/60 my-2 w-full border-t" />
+            <span className="my-2 w-full border-t border-border/60" />
 
             <div className="w-full text-center">
               <p className="mb-3 font-body text-xs text-muted-foreground">
@@ -248,7 +282,7 @@ export default function LoginPage() {
               </p>
               <Button
                 type="button"
-                className="border-accent/20 bg-accent/5 hover:bg-accent/10 group w-full font-body font-bold text-accent shadow-none hover:text-accent"
+                className="group w-full border-accent/20 bg-accent/5 font-body font-bold text-accent shadow-none hover:bg-accent/10 hover:text-accent"
                 onClick={handleTryDemo}
                 disabled={loading || demoLoading}
               >

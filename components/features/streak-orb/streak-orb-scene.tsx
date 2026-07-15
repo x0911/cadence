@@ -7,6 +7,7 @@ import { getCappedDPR } from "@/lib/device";
 import { StreakOrbParticles } from "./streak-orb-particles";
 import type { StreakOrbFallbackProps } from "./streak-orb-fallback";
 import * as THREE from "three";
+import Aurora from "@/components/react-bits/backgrounds/Aurora";
 
 // Accents mapping matching tailwind variables
 const ORB_COLORS: Record<number, string> = {
@@ -27,7 +28,7 @@ const LEVEL_CONFIG = {
 function DisplacedOrb({ strengthLevel }: { strengthLevel: 0 | 1 | 2 | 3 }) {
   const meshRef = useRef<THREE.Mesh>(null);
   const geoRef = useRef<THREE.IcosahedronGeometry>(null);
-  
+
   // Keep track of the original vertex positions on load
   const originalPositions = useRef<Float32Array | null>(null);
 
@@ -39,7 +40,7 @@ function DisplacedOrb({ strengthLevel }: { strengthLevel: 0 | 1 | 2 | 3 }) {
 
     const time = state.clock.getElapsedTime();
     const positionAttr = geoRef.current.attributes.position;
-    
+
     // Lazy initialize original positions cache
     if (!originalPositions.current) {
       originalPositions.current = positionAttr.array.slice() as Float32Array;
@@ -68,12 +69,12 @@ function DisplacedOrb({ strengthLevel }: { strengthLevel: 0 | 1 | 2 | 3 }) {
           Math.sin(z * freq + time * speed);
 
         const displacement = 1.0 + wave * amplitude;
-        
+
         current[i * 3] = x * displacement;
         current[i * 3 + 1] = y * displacement;
         current[i * 3 + 2] = z * displacement;
       }
-      
+
       positionAttr.needsUpdate = true;
       geoRef.current.computeVertexNormals();
     }
@@ -123,11 +124,25 @@ function OrbitRings({ color }: { color: string }) {
   );
 }
 
-export function StreakOrbScene({ strengthLevel, maxStreak, activeHabitsCount }: StreakOrbFallbackProps) {
+export function StreakOrbScene({
+  strengthLevel,
+  maxStreak,
+  activeHabitsCount,
+}: StreakOrbFallbackProps) {
   const color = ORB_COLORS[strengthLevel] ?? ORB_COLORS[0];
 
   return (
-    <div className="relative w-full h-full">
+    <div className="relative flex h-full w-full items-center justify-center">
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-20"
+        style={{
+          maskImage: "radial-gradient(circle at center, black 25%, transparent 70%)",
+          WebkitMaskImage: "radial-gradient(circle at center, black 25%, transparent 70%)",
+        }}
+      >
+        <Aurora colorStops={[color, "#34D399", "#047857"]} amplitude={0.25} speed={0.2} />
+      </div>
+
       <Canvas
         dpr={getCappedDPR()}
         camera={{ position: [0, 0, 3.85], fov: 45 }}
@@ -154,7 +169,8 @@ export function StreakOrbScene({ strengthLevel, maxStreak, activeHabitsCount }: 
 
       {/* Screen-reader-only accessible descriptors */}
       <span className="sr-only">
-        Streak Orb status: Strength level {strengthLevel} representing {activeHabitsCount} active rituals and best streak of {maxStreak} days.
+        Streak Orb status: Strength level {strengthLevel} representing {activeHabitsCount} active
+        rituals and best streak of {maxStreak} days.
       </span>
     </div>
   );

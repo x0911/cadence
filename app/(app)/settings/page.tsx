@@ -9,8 +9,10 @@ import { Switch } from "@/components/ui/switch";
 import { Select as UISelect, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Save, Globe, Eye, Mail, User, Loader2 } from "lucide-react";
+import { ArrowLeft, Save, Globe, Eye, Mail, User, Loader2, Moon } from "lucide-react";
 import Link from "next/link";
+import { ThemeToggle } from "@/components/features/theme-toggle";
+import StarBorder from "@/components/react-bits/components/StarBorder";
 
 // Common timezones to choose from
 const POPULAR_TIMEZONES = [
@@ -110,7 +112,12 @@ function SettingsForm({ profile, updateProfile, isUpdating }: SettingsFormProps)
 
   return (
     <form onSubmit={handleSave}>
-      <Card className="overflow-hidden rounded-2xl border-border bg-card font-body shadow-sm">
+      <StarBorder
+        as="div"
+        thickness={1}
+        className="w-full"
+        innerClassName="bg-card text-foreground rounded-[20px] text-left"
+      >
         <CardHeader>
           <CardTitle className="font-heading text-2xl font-bold tracking-tight">
             Profile Customization
@@ -174,7 +181,7 @@ function SettingsForm({ profile, updateProfile, isUpdating }: SettingsFormProps)
                 variant="outline"
                 onClick={handleAutodetectTimezone}
                 disabled={isUpdating}
-                className="border-border/80 rounded-xl font-semibold hover:bg-muted hover:text-slate-900"
+                className="border-border/80 rounded-xl font-semibold hover:bg-muted hover:text-foreground"
               >
                 Autodetect
               </Button>
@@ -182,6 +189,22 @@ function SettingsForm({ profile, updateProfile, isUpdating }: SettingsFormProps)
             <p className="text-[10px] text-muted-foreground">
               Timezone selection regulates the cutoff boundaries of your daily checking streaks.
             </p>
+          </div>
+
+          {/* Dark Mode Switch */}
+          <div className="flex items-center justify-between">
+            <div className="space-y-0.5">
+              <Label
+                className="flex items-center gap-1.5 text-sm font-semibold text-foreground"
+              >
+                <Moon className="text-muted-foreground/80 h-4 w-4" />
+                Dark Theme
+              </Label>
+              <p className="max-w-[420px] text-xs text-muted-foreground">
+                Toggle dark mode theme for the Cadence interface.
+              </p>
+            </div>
+            <ThemeToggle />
           </div>
 
           <div className="border-border/60 my-4 border-t" />
@@ -235,7 +258,7 @@ function SettingsForm({ profile, updateProfile, isUpdating }: SettingsFormProps)
           </div>
         </CardContent>
 
-        <CardFooter className="bg-muted/30 border-border/60 flex justify-end border-t px-6 py-4">
+        <CardFooter className="bg-muted/30 border-border/60 flex justify-end border-t px-6 py-4 rounded-b-[20px]">
           <Button
             type="submit"
             disabled={isUpdating}
@@ -254,7 +277,7 @@ function SettingsForm({ profile, updateProfile, isUpdating }: SettingsFormProps)
             )}
           </Button>
         </CardFooter>
-      </Card>
+      </StarBorder>
     </form>
   );
 }
@@ -265,8 +288,8 @@ export default function SettingsPage() {
 
   if (isProfileLoading) {
     return (
-      <div className="min-h-screen bg-[#FAFAFA] pb-16">
-        <header className="border-border/80 border-b bg-white/80 px-4 py-4 backdrop-blur-md">
+      <div className="min-h-screen bg-background pb-16">
+        <header className="border-border/80 border-b bg-card/80 px-4 py-4 backdrop-blur-md">
           <div className="mx-auto flex max-w-2xl items-center gap-3">
             <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
             <span className="font-heading text-lg font-bold">Loading Settings...</span>
@@ -289,23 +312,26 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] pb-16">
+    <div className="min-h-screen bg-background pb-16">
       {/* Settings Navigation Header */}
-      <header className="border-border/80 sticky top-0 z-40 border-b bg-white/80 backdrop-blur-md">
-        <div className="mx-auto flex max-w-2xl items-center gap-3 px-4 py-4">
-          <Link href="/dashboard">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-9 w-9 rounded-xl text-muted-foreground hover:bg-muted hover:text-foreground"
-            >
-              <ArrowLeft className="h-5 w-5" />
-              <span className="sr-only">Back to Dashboard</span>
-            </Button>
-          </Link>
-          <span className="font-heading text-lg font-bold tracking-tight text-foreground">
-            Settings & Account
-          </span>
+      <header className="border-border/80 sticky top-0 z-40 border-b bg-card/80 backdrop-blur-md">
+        <div className="mx-auto flex max-w-2xl items-center justify-between px-4 py-4">
+          <div className="flex items-center gap-3">
+            <Link href="/dashboard">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-9 w-9 rounded-xl text-muted-foreground hover:bg-muted hover:text-foreground"
+              >
+                <ArrowLeft className="h-5 w-5" />
+                <span className="sr-only">Back to Dashboard</span>
+              </Button>
+            </Link>
+            <span className="font-heading text-lg font-bold tracking-tight text-foreground">
+              Settings & Account
+            </span>
+          </div>
+          <ThemeToggle />
         </div>
       </header>
 

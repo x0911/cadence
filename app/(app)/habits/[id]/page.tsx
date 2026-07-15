@@ -2,6 +2,7 @@
 
 import { useHabit } from "@/hooks/useHabits";
 import { useProfile } from "@/hooks/useProfile";
+import { ThemeToggle } from "@/components/features/theme-toggle";
 import { useStreakStats } from "@/hooks/useStreakStats";
 import { useCheckIn } from "@/hooks/useCheckIn";
 import { HeatmapCalendar } from "@/components/features/heatmap-calendar";
@@ -77,8 +78,8 @@ export default function HabitDetailPage({ params }: PageProps) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#FAFAFA] pb-16">
-        <header className="border-border/80 border-b bg-white/80 px-4 py-4 backdrop-blur-md">
+      <div className="min-h-screen bg-background pb-16">
+        <header className="border-border/80 border-b bg-card/80 px-4 py-4 backdrop-blur-md">
           <div className="mx-auto flex max-w-4xl items-center gap-3">
             <Skeleton className="h-9 w-9 rounded-xl" />
             <Skeleton className="h-6 w-32 rounded-lg" />
@@ -94,7 +95,7 @@ export default function HabitDetailPage({ params }: PageProps) {
 
   if (!habit) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-[#FAFAFA] p-4 text-center">
+      <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4 text-center">
         <h2 className="mb-2 font-heading text-2xl font-bold text-foreground">Habit Not Found</h2>
         <p className="mb-6 font-body text-muted-foreground">
           This habit may have been archived or doesn't exist.
@@ -109,9 +110,9 @@ export default function HabitDetailPage({ params }: PageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] pb-16">
+    <div className="min-h-screen bg-background pb-16">
       {/* Detail header */}
-      <header className="border-border/80 sticky top-0 z-40 border-b bg-white/80 backdrop-blur-md">
+      <header className="border-border/80 sticky top-0 z-40 border-b bg-card/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-4">
           <div className="flex items-center gap-3">
             <Link href="/dashboard">
@@ -143,15 +144,18 @@ export default function HabitDetailPage({ params }: PageProps) {
             </div>
           </div>
 
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleEdit}
-            className="border-border/80 flex items-center gap-1.5 rounded-xl font-body font-semibold hover:bg-muted hover:text-slate-900"
-          >
-            <Edit2 className="h-3.5 w-3.5" />
-            <span>Edit Ritual</span>
-          </Button>
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleEdit}
+              className="border-border/80 flex items-center gap-1.5 rounded-xl font-body font-semibold hover:bg-muted hover:text-foreground"
+            >
+              <Edit2 className="h-3.5 w-3.5" />
+              <span>Edit Ritual</span>
+            </Button>
+          </div>
         </div>
       </header>
 
@@ -160,7 +164,7 @@ export default function HabitDetailPage({ params }: PageProps) {
           {/* Left Column: Heatmap and Stats */}
           <div className="space-y-6">
             {/* Stats Grid */}
-            <div className="border-border/80 grid grid-cols-3 gap-4 rounded-2xl border bg-white p-5 shadow-sm">
+            <div className="border-border/80 grid grid-cols-3 gap-4 rounded-2xl border bg-card p-5 shadow-sm">
               <div className="space-y-1 text-center">
                 <span className="block flex items-center justify-center gap-1 font-heading text-2xl font-bold text-foreground">
                   <Flame className="h-5 w-5 animate-pulse text-accent" />
@@ -211,7 +215,7 @@ export default function HabitDetailPage({ params }: PageProps) {
                 onComplete={handleFocusTimerComplete}
               />
             ) : (
-              <div className="border-border/80 flex flex-col items-center justify-center rounded-2xl border bg-white p-6 py-10 text-center shadow-sm">
+              <div className="border-border/80 flex flex-col items-center justify-center rounded-2xl border bg-card p-6 py-10 text-center shadow-sm">
                 <div className="text-muted-foreground/60 mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-muted">
                   <Target className="h-6 w-6" />
                 </div>

@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Check, Flame, Loader2 } from "lucide-react";
 import gsap from "gsap";
+import ClickSpark from "@/components/react-bits/animations/ClickSpark";
+import { prefersReducedMotion } from "@/lib/device";
 
 interface CheckInButtonProps {
   habitId: string;
@@ -61,7 +63,7 @@ export function CheckInButton({
     );
   };
 
-  return (
+  const buttonMarkup = (
     <Button
       ref={containerRef}
       onClick={handleToggle}
@@ -90,5 +92,13 @@ export function CheckInButton({
         </span>
       )}
     </Button>
+  );
+
+  return !prefersReducedMotion() ? (
+    <ClickSpark sparkColor={colorHex} sparkCount={10} sparkRadius={22} duration={400} inline={true}>
+      {buttonMarkup}
+    </ClickSpark>
+  ) : (
+    buttonMarkup
   );
 }

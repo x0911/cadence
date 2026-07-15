@@ -110,7 +110,7 @@ cadence/
 
 ### 1. Clone & install
 ```bash
-git clone https://github.com/<your-username>/cadence.git
+git clone https://github.com/x0911/cadence.git
 cd cadence
 npm install
 ```

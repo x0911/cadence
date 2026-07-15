@@ -7,6 +7,7 @@ import { prefersReducedMotion } from "@/lib/device";
 import { Play, Pause, RotateCcw, CheckCircle, ArrowRight, Volume2, VolumeX } from "lucide-react";
 import gsap from "gsap";
 import { useUIStore } from "@/store/ui-store";
+import TiltedCard from "@/components/react-bits/components/TiltedCard";
 
 interface FocusTimerProps {
   habitId: string;
@@ -141,8 +142,8 @@ export function FocusTimer({
     return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
   };
 
-  return (
-    <div className="border-border/80 flex flex-col items-center justify-center rounded-2xl border bg-card p-6 text-center font-body shadow-sm">
+  const timerCard = (
+    <div className="flex flex-col items-center justify-center rounded-2xl border border-border/80 bg-card p-6 text-center font-body shadow-sm">
       <div className="mb-4 flex w-full items-center justify-between">
         <h4 className="font-heading text-sm font-semibold uppercase tracking-wider text-muted-foreground">
           Focus Session
@@ -220,7 +221,7 @@ export function FocusTimer({
               variant="outline"
               size="icon"
               onClick={resetTimer}
-              className="border-border/80 h-11 w-11 rounded-xl hover:bg-muted"
+              className="h-11 w-11 rounded-xl border-border/80 hover:bg-muted"
             >
               <RotateCcw className="h-4.5 w-4.5 text-muted-foreground" />
             </Button>
@@ -247,7 +248,7 @@ export function FocusTimer({
               variant="outline"
               size="icon"
               onClick={skipTimer}
-              className="border-border/80 h-11 w-11 rounded-xl hover:bg-muted"
+              className="h-11 w-11 rounded-xl border-border/80 hover:bg-muted"
               title="Skip to end"
             >
               <ArrowRight className="h-4.5 w-4.5 text-muted-foreground" />
@@ -256,5 +257,23 @@ export function FocusTimer({
         )}
       </div>
     </div>
+  );
+
+  return !prefersReducedMotion() ? (
+    <TiltedCard
+      containerHeight="auto"
+      containerWidth="100%"
+      imageHeight="auto"
+      imageWidth="100%"
+      rotateAmplitude={6}
+      scaleOnHover={1.01}
+      showTooltip={false}
+      enabledAnimation={false}
+      showMobileWarning={false}
+    >
+      {timerCard}
+    </TiltedCard>
+  ) : (
+    timerCard
   );
 }

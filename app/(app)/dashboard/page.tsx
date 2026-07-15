@@ -15,6 +15,7 @@ import { Plus, Settings, LogOut, Flame, Sparkles, CheckCircle2 } from "lucide-re
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
+import { ThemeToggle } from "@/components/features/theme-toggle";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -98,20 +99,21 @@ export default function DashboardPage() {
   const isLoading = isProfileLoading || isHabitsLoading || isStatsLoading;
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] pb-16">
+    <div className="min-h-screen bg-background pb-16">
       {/* Premium Dashboard Header */}
-      <header className="border-border/80 sticky top-0 z-40 border-b bg-white/80 backdrop-blur-md">
+      <header className="sticky top-0 z-40 border-b border-border/80 bg-card/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
-          <div className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent text-accent-foreground shadow-sm">
               <Flame className="h-5 w-5" />
             </div>
-            <span className="font-heading text-xl font-bold tracking-tight text-foreground">
+            <span className="select-none font-heading text-xl font-bold tracking-tight text-foreground">
               Cadence
             </span>
-          </div>
+          </Link>
 
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <Link href="/settings">
               <Button
                 variant="ghost"
@@ -126,7 +128,7 @@ export default function DashboardPage() {
               variant="ghost"
               size="icon"
               onClick={handleSignOut}
-              className="hover:bg-destructive/5 h-9 w-9 rounded-xl text-muted-foreground hover:text-destructive"
+              className="h-9 w-9 rounded-xl text-muted-foreground hover:bg-destructive/5 hover:text-destructive"
             >
               <LogOut className="h-5 w-5" />
               <span className="sr-only">Sign Out</span>
@@ -146,10 +148,10 @@ export default function DashboardPage() {
                 </h2>
                 <div className="flex items-center gap-2">
                   <p className="font-body text-xs text-muted-foreground">{todayStr}</p>
-                  <span className="text-muted-foreground/30 text-xs">•</span>
+                  <span className="text-xs text-muted-foreground/30">•</span>
                   <Link
                     href="/habits/archived"
-                    className="hover:text-accent/90 text-xs font-semibold text-accent hover:underline"
+                    className="text-xs font-semibold text-accent hover:text-accent/90 hover:underline"
                   >
                     Archived Rituals
                   </Link>
@@ -157,7 +159,7 @@ export default function DashboardPage() {
               </div>
               <Button
                 onClick={() => setCreateHabitOpen(true)}
-                className="hover:bg-accent/90 rounded-xl bg-accent font-semibold text-accent-foreground"
+                className="rounded-xl bg-accent font-semibold text-accent-foreground hover:bg-accent/90"
               >
                 <Plus className="mr-1.5 h-4 w-4" />
                 Add Habit
@@ -188,8 +190,8 @@ export default function DashboardPage() {
                 ))}
               </div>
             ) : (
-              <div className="border-border/80 flex flex-col items-center justify-center rounded-2xl border border-dashed bg-white p-12 text-center shadow-sm">
-                <div className="text-muted-foreground/60 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-muted">
+              <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border/80 bg-card p-12 text-center shadow-sm">
+                <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-muted text-muted-foreground/60">
                   <CheckCircle2 className="h-7 w-7" />
                 </div>
                 <h3 className="mb-1.5 font-heading text-lg font-semibold text-foreground">
@@ -201,7 +203,7 @@ export default function DashboardPage() {
                 </p>
                 <Button
                   onClick={() => setCreateHabitOpen(true)}
-                  className="hover:bg-accent/90 rounded-xl bg-accent font-semibold text-accent-foreground"
+                  className="rounded-xl bg-accent font-semibold text-accent-foreground hover:bg-accent/90"
                 >
                   Create Your First Habit
                 </Button>
@@ -211,7 +213,7 @@ export default function DashboardPage() {
 
           {/* Sidebar Orb Column */}
           <div className="flex flex-col items-center gap-6 md:sticky md:top-24 md:h-fit">
-            <div className="border-border/80 flex w-full flex-col items-center rounded-2xl border bg-white p-6 text-center shadow-sm">
+            <div className="flex w-full flex-col items-center rounded-2xl border border-border/80 bg-card p-6 text-center shadow-sm">
               <h3 className="mb-4 font-heading text-sm font-semibold uppercase tracking-wider text-muted-foreground">
                 Streak Consistency
               </h3>
@@ -229,10 +231,10 @@ export default function DashboardPage() {
                 </div>
               )}
 
-              <Separator className="bg-border/60 my-4" />
+              <Separator className="my-4 bg-border/60" />
 
               <div className="grid w-full grid-cols-2 gap-4">
-                <div className="bg-muted/40 rounded-xl p-2 text-center">
+                <div className="rounded-xl bg-muted/40 p-2 text-center">
                   <span className="block font-heading text-xl font-bold text-foreground">
                     {isLoading ? "-" : globalStats?.maxStreak || 0}
                   </span>
@@ -240,7 +242,7 @@ export default function DashboardPage() {
                     Best Streak
                   </span>
                 </div>
-                <div className="bg-muted/40 rounded-xl p-2 text-center">
+                <div className="rounded-xl bg-muted/40 p-2 text-center">
                   <span className="block font-heading text-xl font-bold text-foreground">
                     {isLoading ? "-" : habits?.length || 0}
                   </span>
@@ -251,7 +253,7 @@ export default function DashboardPage() {
               </div>
 
               {!isLoading && globalStats && globalStats.maxStreak >= 7 && (
-                <div className="bg-accent/5 mt-4 flex items-center gap-1.5 rounded-lg px-3 py-2 text-left text-xs font-semibold text-accent">
+                <div className="mt-4 flex items-center gap-1.5 rounded-lg bg-accent/5 px-3 py-2 text-left text-xs font-semibold text-accent">
                   <Sparkles className="h-4 w-4 shrink-0" />
                   <span>Consistency is established! Keep going.</span>
                 </div>

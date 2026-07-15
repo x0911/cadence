@@ -11,6 +11,8 @@
  * Per §6.6 and §9: always includes a screen-reader-only text summary.
  */
 
+import { prefersReducedMotion } from "@/lib/device";
+
 export interface StreakOrbFallbackProps {
   /** 0–3: dormant, building, established, strong */
   strengthLevel: 0 | 1 | 2 | 3;
@@ -36,8 +38,55 @@ export function StreakOrbFallback({
   const label = STRENGTH_LABELS[strengthLevel];
   const size = 80 + strengthLevel * 20; // grows with strength
 
+  const showParticles = !prefersReducedMotion() && strengthLevel > 0;
+
   return (
-    <div className="orb-container flex flex-col items-center justify-center gap-3">
+    <div className="orb-container relative flex flex-col items-center justify-center gap-3">
+      {/* CSS-only ambient particle background */}
+      {showParticles && (
+        <div className="absolute inset-0 pointer-events-none -z-10 flex items-center justify-center h-[160px] w-[160px]">
+          <div
+            className="absolute h-2.5 w-2.5 rounded-full opacity-40 animate-pulse"
+            style={{
+              backgroundColor: color,
+              transform: 'translate(-45px, -45px)',
+              animationDuration: '3.5s',
+              filter: 'blur(0.5px)',
+            }}
+          />
+          <div
+            className="absolute h-3 w-3 rounded-full opacity-30 animate-pulse"
+            style={{
+              backgroundColor: color,
+              transform: 'translate(45px, -35px)',
+              animationDuration: '4.5s',
+              animationDelay: '0.8s',
+              filter: 'blur(0.5px)',
+            }}
+          />
+          <div
+            className="absolute h-2 w-2 rounded-full opacity-50 animate-pulse"
+            style={{
+              backgroundColor: color,
+              transform: 'translate(-35px, 45px)',
+              animationDuration: '3s',
+              animationDelay: '1.5s',
+              filter: 'blur(0.5px)',
+            }}
+          />
+          <div
+            className="absolute h-3.5 w-3.5 rounded-full opacity-20 animate-pulse"
+            style={{
+              backgroundColor: color,
+              transform: 'translate(35px, 40px)',
+              animationDuration: '5s',
+              animationDelay: '2.2s',
+              filter: 'blur(1px)',
+            }}
+          />
+        </div>
+      )}
+
       {/* Static SVG orb */}
       <svg
         width={size + 40}
