@@ -1,6 +1,5 @@
 "use client";
 
-import { use } from "react";
 import { useHabit } from "@/hooks/useHabits";
 import { useProfile } from "@/hooks/useProfile";
 import { useStreakStats } from "@/hooks/useStreakStats";
@@ -18,15 +17,14 @@ import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 
 interface PageProps {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }
 
 export default function HabitDetailPage({ params }: PageProps) {
   const { toast } = useToast();
   const { setEditingHabitId, setCreateHabitOpen } = useUIStore();
 
-  // Unwrap params using React.use()
-  const { id: habitId } = use(params);
+  const { id: habitId } = params;
 
   const { data: profile } = useProfile();
   const { data: habit, isLoading: isHabitLoading } = useHabit(habitId);
