@@ -6,7 +6,7 @@
 
 A gamified habit & streak tracker with a real-time 3D "Streak Orb" that grows as you build consistency — built with Next.js 14, Supabase, and Three.js.
 
-[**🚀 Live Demo**](https://get-cadence.vercel.app/login) · [Report a Bug](../../issues) · [Request a Feature](../../issues)
+[**🚀 Live Demo**](https://get-cadence.vercel.app/) · [Report a Bug](../../issues) · [Request a Feature](../../issues)
 
 ![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)
@@ -31,9 +31,11 @@ It's a full-stack, production-shaped reference app: real auth, row-level securit
 
 ## 🖼️ Preview
 
-| Dashboard & Streak Orb | Habit Detail & Heatmap |
+| Landing Page | Settings |
 |---|---|
-| *screenshot/GIF placeholder — add after visual refresh* | *screenshot/GIF placeholder — add after visual refresh* |
+| ![Landing Page](./readme-assets/screenshot-1.png) | ![Settings](./readme-assets/screenshot-2.png) |
+| **Dashboard & Streak Orb** | **Habit Detail & Heatmap** |
+| ![Dashboard and Streak Orb](./readme-assets/screenshot-3.png) | ![Habit Detail and Heatmap](./readme-assets/screenshot-4.png) |
 
 ---
 
@@ -172,7 +174,6 @@ Cadence's visual language combines:
 - A custom emerald-based design token system (`app/globals.css`) shared between the UI chrome and the 3D Streak Orb's own color ramp, so the "orb colors" and "app colors" are always the same palette.
 - [**React Bits**](https://reactbits.dev) for animated backgrounds, kinetic text, and interactive card effects across the landing page and key in-app moments — themed to match the app's palette rather than used with default styling.
 - [shadcn/ui](https://ui.shadcn.com) + [Radix UI](https://www.radix-ui.com) for accessible, unstyled-by-default primitives (dialogs, dropdowns, switches).
-- Full design rationale and the component-by-component migration plan live in [`plan.md`](./plan.md) for anyone curious about the *why*, not just the *what*.
 
 ---
 
@@ -203,7 +204,7 @@ Good first areas to contribute: additional React Bits component integrations, mo
 
 ## 📄 License
 
-MIT © [Hamdi Mohamed](./LICENSE) — free to use, modify, and build on.
+[MIT © Hamdi Mohamed](./LICENSE) — free to use, modify, and build on.
 
 ---
 
@@ -211,4 +212,4 @@ MIT © [Hamdi Mohamed](./LICENSE) — free to use, modify, and build on.
 
 Built by **Hamdi Mohamed**, Senior Frontend Engineer (Vue/Nuxt background, also comfortable in React, WordPress/PHP, and Python) — this project was built to demonstrate full-stack product thinking in the React/Next.js ecosystem: real auth and RLS, correct timezone-aware business logic, accessibility guard-railing around a custom WebGL feature, automated testing, and a deliberate, documented design system rather than an out-of-the-box template.
 
-📫 Feel free to reach out via GitHub issues or connect on [LinkedIn](#) for feedback or collaboration.
+📫 Feel free to reach out via GitHub issues or connect on [LinkedIn](https://www.linkedin.com/in/dx911/) for feedback or collaboration.
