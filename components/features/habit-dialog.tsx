@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select as UISelect, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
@@ -243,7 +243,7 @@ export function HabitDialog() {
                 <Label htmlFor="frequency" className="text-xs font-semibold text-foreground">
                   Frequency
                 </Label>
-                <Select value={frequency} onValueChange={setFrequency} disabled={isPending}>
+                <UISelect value={frequency} onValueChange={setFrequency} disabled={isPending}>
                   <SelectTrigger id="frequency" className="rounded-xl border-border/80">
                     <SelectValue placeholder="Select frequency" />
                   </SelectTrigger>
@@ -252,7 +252,7 @@ export function HabitDialog() {
                     <SelectItem value="weekly">Weekly</SelectItem>
                     <SelectItem value="custom">Custom Days</SelectItem>
                   </SelectContent>
-                </Select>
+                </UISelect>
               </div>
 
               {frequency === "custom" && (
@@ -308,7 +308,7 @@ export function HabitDialog() {
                 <Label htmlFor="focus-duration" className="text-xs font-semibold text-foreground">
                   Timer Duration
                 </Label>
-                <Select value={focusDuration} onValueChange={setFocusDuration} disabled={isPending}>
+                <UISelect value={focusDuration} onValueChange={setFocusDuration} disabled={isPending}>
                   <SelectTrigger id="focus-duration" className="rounded-xl border-border/80">
                     <SelectValue placeholder="Select duration" />
                   </SelectTrigger>
@@ -321,7 +321,7 @@ export function HabitDialog() {
                     <SelectItem value="2700">45 Minutes</SelectItem>
                     <SelectItem value="3600">60 Minutes</SelectItem>
                   </SelectContent>
-                </Select>
+                </UISelect>
               </div>
             )}
 

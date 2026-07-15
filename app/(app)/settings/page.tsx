@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select as UISelect, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, Save, Globe, Eye, Mail, User, Loader2 } from "lucide-react";
@@ -173,7 +173,7 @@ export default function SettingsPage() {
                 </Label>
                 <div className="flex gap-2">
                   <div className="flex-1">
-                    <Select value={timezone} onValueChange={setTimezone} disabled={isUpdating}>
+                    <UISelect value={timezone} onValueChange={setTimezone} disabled={isUpdating}>
                       <SelectTrigger id="timezone" className="rounded-xl border-border/80">
                         <SelectValue placeholder="Select timezone" />
                       </SelectTrigger>
@@ -188,7 +188,7 @@ export default function SettingsPage() {
                           </SelectItem>
                         ))}
                       </SelectContent>
-                    </Select>
+                    </UISelect>
                   </div>
                   <Button
                     type="button"
