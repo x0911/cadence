@@ -4,6 +4,7 @@
  * will add the app shell (nav, sidebar) in later phases.
  */
 import { MilestoneCelebration } from "@/components/features/milestone-celebration";
+import { ConfirmationDialog } from "@/components/features/confirmation-dialog";
 
 export default function AppLayout({
   children,
@@ -14,6 +15,7 @@ export default function AppLayout({
     <div className="min-h-screen bg-background">
       <main>{children}</main>
       <MilestoneCelebration />
+      <ConfirmationDialog />
     </div>
   );
 }

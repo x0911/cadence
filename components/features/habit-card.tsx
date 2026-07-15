@@ -29,7 +29,7 @@ interface HabitCardProps {
 export function HabitCard({ habit, timezone, onMilestoneCrossed }: HabitCardProps) {
   const router = useRouter();
   const { toast } = useToast();
-  const { setEditingHabitId, setCreateHabitOpen } = useUIStore();
+  const { setEditingHabitId, setCreateHabitOpen, showConfirm } = useUIStore();
   const { mutate: archiveHabit } = useArchiveHabit();
 
   const { data: stats } = useStreakStats(habit.id, timezone);
@@ -64,16 +64,22 @@ export function HabitCard({ habit, timezone, onMilestoneCrossed }: HabitCardProp
   };
 
   const handleArchive = () => {
-    if (confirm(`Are you sure you want to archive "${habit.name}"?`)) {
-      archiveHabit(habit.id, {
-        onSuccess: () => {
-          toast({
-            title: "Habit Archived",
-            description: `"${habit.name}" has been soft-deleted.`,
-          });
-        },
-      });
-    }
+    showConfirm({
+      title: "Archive Habit",
+      description: `Are you sure you want to archive "${habit.name}"? This will soft-delete it from your active rituals list.`,
+      confirmLabel: "Archive",
+      cancelLabel: "Cancel",
+      onConfirm: () => {
+        archiveHabit(habit.id, {
+          onSuccess: () => {
+            toast({
+              title: "Habit Archived",
+              description: `"${habit.name}" has been soft-deleted.`,
+            });
+          },
+        });
+      },
+    });
   };
 
   return (

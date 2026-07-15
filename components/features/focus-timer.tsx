@@ -5,7 +5,7 @@ import { resolveColor, type HabitColorToken } from "@/lib/palette";
 import { Button } from "@/components/ui/button";
 import { prefersReducedMotion } from "@/lib/device";
 import { Play, Pause, RotateCcw, CheckCircle, ArrowRight, Volume2, VolumeX } from "lucide-react";
-import gsap from "gsap";
+import { useUIStore } from "@/store/ui-store";
 
 interface FocusTimerProps {
   habitId: string;
@@ -22,6 +22,7 @@ export function FocusTimer({
   onComplete,
 }: FocusTimerProps) {
   const colorHex = resolveColor(colorToken as HabitColorToken);
+  const { showConfirm } = useUIStore();
   const [timeLeft, setTimeLeft] = useState(durationSeconds);
   const [isActive, setIsActive] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -120,9 +121,15 @@ export function FocusTimer({
   };
 
   const skipTimer = () => {
-    if (confirm("Skip timer and log this session?")) {
-      handleTimerComplete();
-    }
+    showConfirm({
+      title: "Skip Timer",
+      description: "Are you sure you want to skip the rest of the timer and log this focus session immediately?",
+      confirmLabel: "Skip & Log",
+      cancelLabel: "Resume",
+      onConfirm: () => {
+        handleTimerComplete();
+      },
+    });
   };
 
   // Formatting helpers

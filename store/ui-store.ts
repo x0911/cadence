@@ -32,6 +32,23 @@ interface UIStore {
   // Focus timer
   activeFocusHabitId: string | null;
   setActiveFocusHabitId: (id: string | null) => void;
+
+  // Confirmation dialogs
+  confirmOptions: {
+    title: string;
+    description: string;
+    confirmLabel?: string;
+    cancelLabel?: string;
+    onConfirm: () => void;
+  } | null;
+  showConfirm: (options: {
+    title: string;
+    description: string;
+    confirmLabel?: string;
+    cancelLabel?: string;
+    onConfirm: () => void;
+  }) => void;
+  hideConfirm: () => void;
 }
 
 export const useUIStore = create<UIStore>((set) => ({
@@ -55,4 +72,9 @@ export const useUIStore = create<UIStore>((set) => ({
   // Focus timer
   activeFocusHabitId: null,
   setActiveFocusHabitId: (id) => set({ activeFocusHabitId: id }),
+
+  // Confirmation dialogs
+  confirmOptions: null,
+  showConfirm: (options) => set({ confirmOptions: options }),
+  hideConfirm: () => set({ confirmOptions: null }),
 }));
