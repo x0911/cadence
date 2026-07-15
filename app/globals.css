@@ -11,23 +11,23 @@
 /* ─── Design Tokens ─────────────────────────────────────────────────────────── */
 :root {
   /* Colors */
-  --color-background:            #FAFAFA;
-  --color-foreground:            #0F172A;
-  --color-card:                  #FFFFFF;
-  --color-card-foreground:       #0F172A;
-  --color-popover:               #FFFFFF;
-  --color-popover-foreground:    #0F172A;
-  --color-accent:                #059669;
-  --color-accent-foreground:     #FFFFFF;
-  --color-secondary:             #F0F4F1;
-  --color-secondary-foreground:  #0F172A;
-  --color-muted:                 #F0F4F1;
-  --color-muted-foreground:      #64748B;
-  --color-border:                #E2E8E4;
-  --color-input:                 #E2E8E4;
-  --color-ring:                  #059669;
-  --color-destructive:           #DC2626;
-  --color-destructive-foreground:#FFFFFF;
+  --color-background:            250 250 250; /* #FAFAFA */
+  --color-foreground:            15 23 42;    /* #0F172A */
+  --color-card:                  255 255 255; /* #FFFFFF */
+  --color-card-foreground:       15 23 42;    /* #0F172A */
+  --color-popover:               255 255 255; /* #FFFFFF */
+  --color-popover-foreground:    15 23 42;    /* #0F172A */
+  --color-accent:                5 150 105;   /* #059669 */
+  --color-accent-foreground:     255 255 255; /* #FFFFFF */
+  --color-secondary:             240 244 241; /* #F0F4F1 */
+  --color-secondary-foreground:  15 23 42;    /* #0F172A */
+  --color-muted:                 240 244 241; /* #F0F4F1 */
+  --color-muted-foreground:      100 116 139; /* #64748B */
+  --color-border:                226 232 228; /* #E2E8E4 */
+  --color-input:                 226 232 228; /* #E2E8E4 */
+  --color-ring:                  5 150 105;   /* #059669 */
+  --color-destructive:           220 38 38;   /* #DC2626 */
+  --color-destructive-foreground:255 255 255; /* #FFFFFF */
 
   /* Border radius */
   --radius: 0.625rem;

@@ -111,7 +111,7 @@ export function HabitCard({ habit, timezone, onMilestoneCrossed }: HabitCardProp
               {habit.name}
             </h3>
 
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <StreakBadge count={stats?.currentStreak || 0} />
               {habit.focus_mode && (
                 <span className="inline-flex items-center rounded-md bg-muted px-1.5 py-0.5 font-body text-[10px] font-medium text-muted-foreground">
