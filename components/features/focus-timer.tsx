@@ -5,6 +5,7 @@ import { resolveColor, type HabitColorToken } from "@/lib/palette";
 import { Button } from "@/components/ui/button";
 import { prefersReducedMotion } from "@/lib/device";
 import { Play, Pause, RotateCcw, CheckCircle, ArrowRight, Volume2, VolumeX } from "lucide-react";
+import gsap from "gsap";
 import { useUIStore } from "@/store/ui-store";
 
 interface FocusTimerProps {
