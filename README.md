@@ -31,7 +31,7 @@ It's a full-stack, production-shaped reference app: real auth, row-level securit
 
 ## 🖼️ Preview
 
-| Landing Page | Settings |
+| Landing Page | Settings (Dark Mode) |
 |---|---|
 | ![Landing Page](./readme-assets/screenshot-1.png) | ![Settings](./readme-assets/screenshot-2.png) |
 | **Dashboard & Streak Orb** | **Habit Detail & Heatmap** |
