@@ -4,7 +4,6 @@ import { useHabits } from "@/hooks/useHabits";
 import { useProfile } from "@/hooks/useProfile";
 import { useUIStore } from "@/store/ui-store";
 import { HabitCard } from "@/components/features/habit-card";
-import { HabitDialog } from "@/components/features/habit-dialog";
 import { StreakOrb } from "@/components/features/streak-orb/streak-orb";
 import { useQuery } from "@tanstack/react-query";
 import { createClient } from "@/lib/supabase/client";
@@ -251,9 +250,6 @@ export default function DashboardPage() {
           </div>
         </div>
       </main>
-
-      {/* Habit Dialog Modal (Create/Edit) */}
-      <HabitDialog />
     </div>
   );
 }

@@ -5,6 +5,7 @@
  */
 import { MilestoneCelebration } from "@/components/features/milestone-celebration";
 import { ConfirmationDialog } from "@/components/features/confirmation-dialog";
+import { HabitDialog } from "@/components/features/habit-dialog";
 
 export default function AppLayout({
   children,
@@ -16,6 +17,7 @@ export default function AppLayout({
       <main>{children}</main>
       <MilestoneCelebration />
       <ConfirmationDialog />
+      <HabitDialog />
     </div>
   );
 }
