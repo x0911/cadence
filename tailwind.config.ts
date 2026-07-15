@@ -18,6 +18,10 @@ const config: Config = {
           DEFAULT: "var(--color-accent)",
           foreground: "var(--color-accent-foreground)",
         },
+        primary: {
+          DEFAULT: "var(--color-accent)",
+          foreground: "var(--color-accent-foreground)",
+        },
         muted: {
           DEFAULT: "var(--color-muted)",
           foreground: "var(--color-muted-foreground)",
