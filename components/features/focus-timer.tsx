@@ -39,22 +39,22 @@ export function FocusTimer({
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
-      
+
       // Node 1: Oscillator (Chime tone)
       const osc = audioCtx.createOscillator();
       const gainNode = audioCtx.createGain();
-      
+
       osc.type = "sine";
       // E5 and G5 chords
       osc.frequency.setValueAtTime(659.25, audioCtx.currentTime); // E5
       osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.15); // G5
-      
+
       gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
       gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.6);
-      
+
       osc.connect(gainNode);
       gainNode.connect(audioCtx.destination);
-      
+
       osc.start();
       osc.stop(audioCtx.currentTime + 0.6);
     } catch (e) {
@@ -67,7 +67,7 @@ export function FocusTimer({
     setIsActive(false);
     setIsCompleted(true);
     playChime();
-    
+
     // Animate completion state header
     if (titleRef.current) {
       gsap.fromTo(
@@ -124,7 +124,8 @@ export function FocusTimer({
   const skipTimer = () => {
     showConfirm({
       title: "Skip Timer",
-      description: "Are you sure you want to skip the rest of the timer and log this focus session immediately?",
+      description:
+        "Are you sure you want to skip the rest of the timer and log this focus session immediately?",
       confirmLabel: "Skip & Log",
       cancelLabel: "Resume",
       onConfirm: () => {
@@ -141,24 +142,24 @@ export function FocusTimer({
   };
 
   return (
-    <div className="rounded-2xl border border-border/80 bg-card p-6 shadow-sm flex flex-col items-center justify-center font-body text-center">
-      <div className="w-full flex items-center justify-between mb-4">
-        <h4 className="font-heading text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+    <div className="border-border/80 flex flex-col items-center justify-center rounded-2xl border bg-card p-6 text-center font-body shadow-sm">
+      <div className="mb-4 flex w-full items-center justify-between">
+        <h4 className="font-heading text-sm font-semibold uppercase tracking-wider text-muted-foreground">
           Focus Session
         </h4>
         <Button
           variant="ghost"
           size="icon"
           onClick={() => setSoundEnabled(!soundEnabled)}
-          className="h-8 w-8 text-muted-foreground hover:text-foreground rounded-lg"
+          className="h-8 w-8 rounded-lg text-muted-foreground"
         >
           {soundEnabled ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
         </Button>
       </div>
 
-      <div className="relative flex items-center justify-center h-48 w-48 mb-6">
+      <div className="relative mb-6 flex h-48 w-48 items-center justify-center">
         {/* SVG Progress Ring */}
-        <svg className="absolute transform -rotate-90 h-full w-full" viewBox="0 0 190 190">
+        <svg className="absolute h-full w-full -rotate-90 transform" viewBox="0 0 190 190">
           <circle
             cx="95"
             cy="95"
@@ -185,13 +186,13 @@ export function FocusTimer({
         {/* Central Timer Text */}
         <div className="z-10 flex flex-col items-center justify-center">
           {isCompleted ? (
-            <CheckCircle className="h-10 w-10 mb-1" style={{ color: colorHex }} />
+            <CheckCircle className="mb-1 h-10 w-10" style={{ color: colorHex }} />
           ) : (
-            <span className="font-heading text-3xl font-bold tracking-tight text-foreground tabular-nums">
+            <span className="font-heading text-3xl font-bold tabular-nums tracking-tight text-foreground">
               {formatTime(timeLeft)}
             </span>
           )}
-          <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
+          <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
             {isCompleted ? "Session Done" : isActive ? "Focusing" : "Paused"}
           </span>
         </div>
@@ -199,7 +200,7 @@ export function FocusTimer({
 
       <h3
         ref={titleRef}
-        className="font-heading text-lg font-bold text-foreground mb-6 max-w-[200px]"
+        className="mb-6 max-w-[200px] font-heading text-lg font-bold text-foreground"
       >
         {isCompleted ? "Great Work!" : `Focusing on: ${habitName}`}
       </h3>
@@ -208,7 +209,7 @@ export function FocusTimer({
         {isCompleted ? (
           <Button
             onClick={resetTimer}
-            className="font-semibold bg-accent text-accent-foreground rounded-xl flex items-center gap-1.5"
+            className="flex items-center gap-1.5 rounded-xl bg-accent font-semibold text-accent-foreground"
           >
             <RotateCcw className="h-4.5 w-4.5" />
             <span>Restart Session</span>
@@ -219,14 +220,14 @@ export function FocusTimer({
               variant="outline"
               size="icon"
               onClick={resetTimer}
-              className="h-11 w-11 rounded-xl border-border/80 hover:bg-muted"
+              className="border-border/80 h-11 w-11 rounded-xl hover:bg-muted"
             >
               <RotateCcw className="h-4.5 w-4.5 text-muted-foreground" />
             </Button>
 
             <Button
               onClick={toggleTimer}
-              className="h-11 px-6 font-semibold rounded-xl text-white flex items-center gap-1.5 shadow-sm"
+              className="flex h-11 items-center gap-1.5 rounded-xl px-6 font-semibold text-white shadow-sm"
               style={{ backgroundColor: colorHex }}
             >
               {isActive ? (
@@ -246,7 +247,7 @@ export function FocusTimer({
               variant="outline"
               size="icon"
               onClick={skipTimer}
-              className="h-11 w-11 rounded-xl border-border/80 hover:bg-muted"
+              className="border-border/80 h-11 w-11 rounded-xl hover:bg-muted"
               title="Skip to end"
             >
               <ArrowRight className="h-4.5 w-4.5 text-muted-foreground" />

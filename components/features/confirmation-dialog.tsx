@@ -30,7 +30,7 @@ export function ConfirmationDialog() {
 
   return (
     <AlertDialog open={isOpen} onOpenChange={(open) => !open && handleCancel()}>
-      <AlertDialogContent className="font-body max-w-sm rounded-2xl border-border bg-card">
+      <AlertDialogContent className="max-w-sm rounded-2xl border-border bg-card font-body">
         <AlertDialogHeader>
           <AlertDialogTitle className="font-heading text-lg font-bold tracking-tight text-foreground">
             {confirmOptions?.title || "Are you sure?"}
@@ -40,12 +40,15 @@ export function ConfirmationDialog() {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="sm:space-x-2">
-          <AlertDialogCancel onClick={handleCancel} className="rounded-xl border-border/80 hover:bg-muted font-semibold">
+          <AlertDialogCancel
+            onClick={handleCancel}
+            className="border-border/80 rounded-xl font-semibold hover:bg-muted hover:text-slate-900"
+          >
             {confirmOptions?.cancelLabel || "Cancel"}
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={handleConfirm}
-            className="rounded-xl bg-accent text-accent-foreground hover:bg-accent/90 font-semibold"
+            className="hover:bg-accent/90 rounded-xl bg-accent font-semibold text-accent-foreground"
           >
             {confirmOptions?.confirmLabel || "Continue"}
           </AlertDialogAction>

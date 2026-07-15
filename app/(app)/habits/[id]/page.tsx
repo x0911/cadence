@@ -28,7 +28,7 @@ export default function HabitDetailPage({ params }: PageProps) {
 
   const { data: profile } = useProfile();
   const { data: habit, isLoading: isHabitLoading } = useHabit(habitId);
-  
+
   const timezone = profile?.timezone || "UTC";
   const { data: stats, isLoading: isStatsLoading } = useStreakStats(habitId, timezone);
 
@@ -78,13 +78,13 @@ export default function HabitDetailPage({ params }: PageProps) {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-[#FAFAFA] pb-16">
-        <header className="border-b border-border/80 bg-white/80 backdrop-blur-md py-4 px-4">
-          <div className="mx-auto max-w-4xl flex items-center gap-3">
+        <header className="border-border/80 border-b bg-white/80 px-4 py-4 backdrop-blur-md">
+          <div className="mx-auto flex max-w-4xl items-center gap-3">
             <Skeleton className="h-9 w-9 rounded-xl" />
             <Skeleton className="h-6 w-32 rounded-lg" />
           </div>
         </header>
-        <main className="mx-auto max-w-4xl px-4 pt-8 space-y-6">
+        <main className="mx-auto max-w-4xl space-y-6 px-4 pt-8">
           <Skeleton className="h-40 w-full rounded-2xl" />
           <Skeleton className="h-80 w-full rounded-2xl" />
         </main>
@@ -94,11 +94,13 @@ export default function HabitDetailPage({ params }: PageProps) {
 
   if (!habit) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#FAFAFA] p-4 text-center">
-        <h2 className="font-heading text-2xl font-bold text-foreground mb-2">Habit Not Found</h2>
-        <p className="font-body text-muted-foreground mb-6">This habit may have been archived or doesn't exist.</p>
+      <div className="flex min-h-screen flex-col items-center justify-center bg-[#FAFAFA] p-4 text-center">
+        <h2 className="mb-2 font-heading text-2xl font-bold text-foreground">Habit Not Found</h2>
+        <p className="mb-6 font-body text-muted-foreground">
+          This habit may have been archived or doesn't exist.
+        </p>
         <Link href="/dashboard">
-          <Button className="bg-accent text-accent-foreground font-semibold rounded-xl">
+          <Button className="rounded-xl bg-accent font-semibold text-accent-foreground">
             Back to Dashboard
           </Button>
         </Link>
@@ -109,22 +111,22 @@ export default function HabitDetailPage({ params }: PageProps) {
   return (
     <div className="min-h-screen bg-[#FAFAFA] pb-16">
       {/* Detail header */}
-      <header className="sticky top-0 z-40 border-b border-border/80 bg-white/80 backdrop-blur-md">
+      <header className="border-border/80 sticky top-0 z-40 border-b bg-white/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-4">
           <div className="flex items-center gap-3">
             <Link href="/dashboard">
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-9 w-9 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl"
+                className="h-9 w-9 rounded-xl text-muted-foreground hover:bg-muted hover:text-foreground"
               >
                 <ArrowLeft className="h-5 w-5" />
                 <span className="sr-only">Back</span>
               </Button>
             </Link>
-            
-            <Separator orientation="vertical" className="h-5 bg-border/60" />
-            
+
+            <Separator orientation="vertical" className="bg-border/60 h-5" />
+
             <div className="flex items-center gap-2">
               <div
                 className="flex h-9 w-9 items-center justify-center rounded-xl"
@@ -145,7 +147,7 @@ export default function HabitDetailPage({ params }: PageProps) {
             variant="outline"
             size="sm"
             onClick={handleEdit}
-            className="font-body font-semibold border-border/80 hover:bg-muted rounded-xl flex items-center gap-1.5"
+            className="border-border/80 flex items-center gap-1.5 rounded-xl font-body font-semibold hover:bg-muted hover:text-slate-900"
           >
             <Edit2 className="h-3.5 w-3.5" />
             <span>Edit Ritual</span>
@@ -158,33 +160,33 @@ export default function HabitDetailPage({ params }: PageProps) {
           {/* Left Column: Heatmap and Stats */}
           <div className="space-y-6">
             {/* Stats Grid */}
-            <div className="grid grid-cols-3 gap-4 rounded-2xl border border-border/80 bg-white p-5 shadow-sm">
-              <div className="text-center space-y-1">
-                <span className="block font-heading text-2xl font-bold text-foreground flex items-center justify-center gap-1">
-                  <Flame className="h-5 w-5 text-accent animate-pulse" />
+            <div className="border-border/80 grid grid-cols-3 gap-4 rounded-2xl border bg-white p-5 shadow-sm">
+              <div className="space-y-1 text-center">
+                <span className="block flex items-center justify-center gap-1 font-heading text-2xl font-bold text-foreground">
+                  <Flame className="h-5 w-5 animate-pulse text-accent" />
                   {stats?.currentStreak || 0}
                 </span>
-                <span className="block font-body text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
+                <span className="block font-body text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                   Current Streak
                 </span>
               </div>
-              
-              <div className="text-center space-y-1 border-x border-border/60">
-                <span className="block font-heading text-2xl font-bold text-foreground flex items-center justify-center gap-1">
+
+              <div className="border-border/60 space-y-1 border-x text-center">
+                <span className="block flex items-center justify-center gap-1 font-heading text-2xl font-bold text-foreground">
                   <Award className="h-5 w-5 text-amber-500" />
                   {stats?.longestStreak || 0}
                 </span>
-                <span className="block font-body text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
+                <span className="block font-body text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                   Longest Streak
                 </span>
               </div>
 
-              <div className="text-center space-y-1">
-                <span className="block font-heading text-2xl font-bold text-foreground flex items-center justify-center gap-1">
+              <div className="space-y-1 text-center">
+                <span className="block flex items-center justify-center gap-1 font-heading text-2xl font-bold text-foreground">
                   <CheckCircle2 className="h-5 w-5 text-emerald-500" />
                   {stats?.totalCheckIns || 0}
                 </span>
-                <span className="block font-body text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
+                <span className="block font-body text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                   Total Taps
                 </span>
               </div>
@@ -209,15 +211,16 @@ export default function HabitDetailPage({ params }: PageProps) {
                 onComplete={handleFocusTimerComplete}
               />
             ) : (
-              <div className="rounded-2xl border border-border/80 bg-white p-6 shadow-sm flex flex-col items-center justify-center text-center py-10">
-                <div className="h-12 w-12 rounded-xl bg-muted flex items-center justify-center text-muted-foreground/60 mb-3">
+              <div className="border-border/80 flex flex-col items-center justify-center rounded-2xl border bg-white p-6 py-10 text-center shadow-sm">
+                <div className="text-muted-foreground/60 mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-muted">
                   <Target className="h-6 w-6" />
                 </div>
-                <h4 className="font-heading text-sm font-semibold text-foreground mb-1">
+                <h4 className="mb-1 font-heading text-sm font-semibold text-foreground">
                   Standard Habit
                 </h4>
-                <p className="font-body text-xs text-muted-foreground max-w-[200px]">
-                  Focus mode countdown timer is not enabled for this habit. Edit the habit configuration to enable it.
+                <p className="max-w-[200px] font-body text-xs text-muted-foreground">
+                  Focus mode countdown timer is not enabled for this habit. Edit the habit
+                  configuration to enable it.
                 </p>
               </div>
             )}

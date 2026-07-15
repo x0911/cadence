@@ -4,7 +4,14 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
@@ -71,7 +78,8 @@ export default function LoginPage() {
         router.refresh();
       }
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Something went wrong. Please check your credentials.";
+      const message =
+        err instanceof Error ? err.message : "Something went wrong. Please check your credentials.";
       toast({
         title: "Authentication Failed",
         description: message,
@@ -115,8 +123,8 @@ export default function LoginPage() {
     <main className="relative flex min-h-screen flex-col items-center justify-center bg-[#FAFAFA] px-4 py-12">
       {/* Background visual detail */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute -top-[40%] -left-[10%] h-[80%] w-[50%] rounded-full bg-accent/5 blur-[120px]" />
-        <div className="absolute -bottom-[40%] -right-[10%] h-[80%] w-[50%] rounded-full bg-accent/5 blur-[120px]" />
+        <div className="bg-accent/5 absolute -left-[10%] -top-[40%] h-[80%] w-[50%] rounded-full blur-[120px]" />
+        <div className="bg-accent/5 absolute -bottom-[40%] -right-[10%] h-[80%] w-[50%] rounded-full blur-[120px]" />
       </div>
 
       <div className="w-full max-w-md space-y-6">
@@ -128,12 +136,12 @@ export default function LoginPage() {
           <h1 className="font-heading text-4xl font-extrabold tracking-tight text-foreground">
             Cadence
           </h1>
-          <p className="font-body text-sm text-muted-foreground max-w-xs text-balance">
+          <p className="max-w-xs text-balance font-body text-sm text-muted-foreground">
             Your consistency, beautifully tracked. Establish streaks, hit milestones.
           </p>
         </div>
 
-        <Card className="border-border bg-card shadow-lg shadow-black/[0.03] rounded-2xl">
+        <Card className="rounded-2xl border-border bg-card shadow-lg shadow-black/[0.03]">
           <CardHeader className="space-y-1">
             <CardTitle className="font-heading text-2xl font-bold tracking-tight">
               {isMagicLink ? "Sign in with Link" : "Sign In"}
@@ -151,7 +159,7 @@ export default function LoginPage() {
                   Email Address
                 </Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-2.5 h-4.5 w-4.5 text-muted-foreground/60" />
+                  <Mail className="h-4.5 w-4.5 text-muted-foreground/60 absolute left-3 top-2.5" />
                   <Input
                     id="email"
                     type="email"
@@ -168,12 +176,15 @@ export default function LoginPage() {
               {!isMagicLink && (
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <Label htmlFor="password" className="font-body text-xs font-semibold text-foreground">
+                    <Label
+                      htmlFor="password"
+                      className="font-body text-xs font-semibold text-foreground"
+                    >
                       Password
                     </Label>
                   </div>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-2.5 h-4.5 w-4.5 text-muted-foreground/60" />
+                    <Lock className="h-4.5 w-4.5 text-muted-foreground/60 absolute left-3 top-2.5" />
                     <Input
                       id="password"
                       type="password"
@@ -190,7 +201,7 @@ export default function LoginPage() {
 
               <Button
                 type="submit"
-                className="w-full font-body font-semibold bg-accent text-accent-foreground hover:bg-accent/90"
+                className="hover:bg-accent/90 w-full bg-accent font-body font-semibold text-accent-foreground"
                 disabled={loading || demoLoading}
               >
                 {loading ? (
@@ -211,7 +222,7 @@ export default function LoginPage() {
                 <span className="w-full border-t border-border" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-card px-2 text-muted-foreground font-body font-medium">
+                <span className="bg-card px-2 font-body font-medium text-muted-foreground">
                   Or continue with
                 </span>
               </div>
@@ -220,7 +231,7 @@ export default function LoginPage() {
             <Button
               variant="outline"
               type="button"
-              className="w-full font-body font-semibold border-border hover:bg-muted"
+              className="w-full border-border font-body font-semibold hover:bg-muted hover:text-slate-900"
               disabled={loading || demoLoading}
               onClick={() => setIsMagicLink(!isMagicLink)}
             >
@@ -229,15 +240,15 @@ export default function LoginPage() {
           </CardContent>
 
           <CardFooter className="flex flex-col space-y-4 pt-0">
-            <span className="w-full border-t border-border/60 my-2" />
-            
+            <span className="border-border/60 my-2 w-full border-t" />
+
             <div className="w-full text-center">
-              <p className="font-body text-xs text-muted-foreground mb-3">
+              <p className="mb-3 font-body text-xs text-muted-foreground">
                 Want to check out the app instantly without signing up?
               </p>
               <Button
                 type="button"
-                className="w-full font-body font-bold border-accent/20 bg-accent/5 text-accent hover:bg-accent/10 hover:text-accent shadow-none group"
+                className="border-accent/20 bg-accent/5 hover:bg-accent/10 group w-full font-body font-bold text-accent shadow-none hover:text-accent"
                 onClick={handleTryDemo}
                 disabled={loading || demoLoading}
               >

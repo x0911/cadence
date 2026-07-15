@@ -85,16 +85,16 @@ export function HabitCard({ habit, timezone, onMilestoneCrossed }: HabitCardProp
   return (
     <Card
       onClick={handleCardClick}
-      className="group relative cursor-pointer border-border/80 bg-card transition-all hover:shadow-md hover:border-accent/15 duration-200 rounded-2xl overflow-hidden"
+      className="border-border/80 hover:border-accent/15 group relative cursor-pointer overflow-hidden rounded-2xl bg-card transition-all duration-200 hover:shadow-md"
     >
       {/* Decorative accent top border line on hover */}
       <div
-        className="absolute top-0 left-0 right-0 h-1 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+        className="absolute left-0 right-0 top-0 h-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{ backgroundColor: colorHex }}
       />
 
       <CardContent className="flex items-center justify-between p-5">
-        <div className="flex items-center gap-4 min-w-0">
+        <div className="flex min-w-0 items-center gap-4">
           {/* Icon container */}
           <div
             className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl transition-transform group-hover:scale-[1.03]"
@@ -107,10 +107,10 @@ export function HabitCard({ habit, timezone, onMilestoneCrossed }: HabitCardProp
           </div>
 
           <div className="min-w-0 space-y-1">
-            <h3 className="font-heading font-semibold text-base tracking-tight text-foreground truncate max-w-[160px] md:max-w-[240px]">
+            <h3 className="max-w-[160px] truncate font-heading text-base font-semibold tracking-tight text-foreground md:max-w-[240px]">
               {habit.name}
             </h3>
-            
+
             <div className="flex items-center gap-2">
               <StreakBadge count={stats?.currentStreak || 0} />
               {habit.focus_mode && (
@@ -148,18 +148,24 @@ export function HabitCard({ habit, timezone, onMilestoneCrossed }: HabitCardProp
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-8 w-8 text-muted-foreground/60 hover:text-foreground hover:bg-muted rounded-lg"
+                className="text-muted-foreground/60 h-8 w-8 rounded-lg hover:bg-muted hover:text-foreground"
               >
                 <MoreVertical className="h-4 w-4" />
                 <span className="sr-only">Actions</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-36 font-body text-sm rounded-xl">
-              <DropdownMenuItem onClick={handleEdit} className="flex items-center gap-2 cursor-pointer">
+            <DropdownMenuContent align="end" className="w-36 rounded-xl font-body text-sm">
+              <DropdownMenuItem
+                onClick={handleEdit}
+                className="flex cursor-pointer items-center gap-2"
+              >
                 <Edit2 className="h-4 w-4" />
                 <span>Edit</span>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleArchive} className="flex items-center gap-2 text-destructive focus:text-destructive cursor-pointer">
+              <DropdownMenuItem
+                onClick={handleArchive}
+                className="flex cursor-pointer items-center gap-2"
+              >
                 <Trash2 className="h-4 w-4" />
                 <span>Archive</span>
               </DropdownMenuItem>

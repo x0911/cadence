@@ -9,8 +9,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Select as UISelect, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Select as UISelect,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
@@ -58,9 +71,7 @@ export function HabitDialog() {
 
   const handleDayToggle = (dayIndex: number) => {
     setCustomDays((prev) =>
-      prev.includes(dayIndex)
-        ? prev.filter((d) => d !== dayIndex)
-        : [...prev, dayIndex].sort()
+      prev.includes(dayIndex) ? prev.filter((d) => d !== dayIndex) : [...prev, dayIndex].sort()
     );
   };
 
@@ -145,7 +156,7 @@ export function HabitDialog() {
 
   return (
     <Dialog open={isCreateHabitOpen} onOpenChange={(open) => !open && handleClose()}>
-      <DialogContent className="max-w-md w-full bg-card border-border sm:rounded-2xl rounded-t-2xl font-body max-h-[92dvh] overflow-y-auto">
+      <DialogContent className="max-h-[92dvh] w-full max-w-md overflow-y-auto rounded-t-2xl border-border bg-card font-body sm:rounded-2xl">
         <DialogHeader>
           <DialogTitle className="font-heading text-2xl font-bold tracking-tight">
             {editingHabitId ? "Edit Habit" : "Create New Habit"}
@@ -176,16 +187,16 @@ export function HabitDialog() {
                 disabled={isPending}
                 required
                 maxLength={45}
-                className="font-body text-sm rounded-xl border-border/80"
+                className="border-border/80 rounded-xl font-body text-sm"
               />
             </div>
 
             {/* Icon Picker */}
             <div className="space-y-2">
-              <Label className="text-xs font-semibold text-foreground block mb-1">
+              <Label className="mb-1 block text-xs font-semibold text-foreground">
                 Select Icon
               </Label>
-              <div className="grid grid-cols-5 gap-2 max-h-[140px] overflow-y-auto p-1.5 border border-border/60 rounded-xl bg-muted/30">
+              <div className="border-border/60 bg-muted/30 grid max-h-[140px] grid-cols-5 gap-2 overflow-y-auto rounded-xl border p-1.5">
                 {HABIT_ICONS.map((icon) => (
                   <button
                     key={icon}
@@ -195,7 +206,7 @@ export function HabitDialog() {
                     className={cn(
                       "flex aspect-square items-center justify-center rounded-xl border transition-all duration-150 hover:bg-muted active:scale-95",
                       selectedIcon === icon
-                        ? "border-accent bg-accent/5 text-accent shadow-sm"
+                        ? "bg-accent/5 border-accent text-accent shadow-sm"
                         : "border-border/40 bg-card text-muted-foreground"
                     )}
                   >
@@ -207,7 +218,7 @@ export function HabitDialog() {
 
             {/* Color Picker */}
             <div className="space-y-2">
-              <Label className="text-xs font-semibold text-foreground block mb-1">
+              <Label className="mb-1 block text-xs font-semibold text-foreground">
                 Select Color Accent
               </Label>
               <div className="flex flex-wrap gap-2.5 p-1">
@@ -220,9 +231,9 @@ export function HabitDialog() {
                       onClick={() => setSelectedColor(color.token)}
                       disabled={isPending}
                       className={cn(
-                        "h-7 w-7 rounded-full transition-all flex items-center justify-center border-2",
+                        "flex h-7 w-7 items-center justify-center rounded-full border-2 transition-all",
                         selectedColor === color.token
-                          ? "border-foreground scale-110 shadow-sm"
+                          ? "scale-110 border-foreground shadow-sm"
                           : "border-transparent"
                       )}
                       style={{ backgroundColor: colorHex }}
@@ -244,7 +255,7 @@ export function HabitDialog() {
                   Frequency
                 </Label>
                 <UISelect value={frequency} onValueChange={setFrequency} disabled={isPending}>
-                  <SelectTrigger id="frequency" className="rounded-xl border-border/80">
+                  <SelectTrigger id="frequency" className="border-border/80 rounded-xl">
                     <SelectValue placeholder="Select frequency" />
                   </SelectTrigger>
                   <SelectContent className="rounded-xl font-body">
@@ -256,11 +267,9 @@ export function HabitDialog() {
               </div>
 
               {frequency === "custom" && (
-                <div className="space-y-2 animate-fade-up">
-                  <Label className="text-xs font-semibold text-foreground block">
-                    Choose Days
-                  </Label>
-                  <div className="flex gap-1.5 justify-between">
+                <div className="animate-fade-up space-y-2">
+                  <Label className="block text-xs font-semibold text-foreground">Choose Days</Label>
+                  <div className="flex justify-between gap-1.5">
                     {WEEKDAYS.map((day, idx) => {
                       const isSelected = customDays.includes(idx);
                       return (
@@ -270,9 +279,9 @@ export function HabitDialog() {
                           onClick={() => handleDayToggle(idx)}
                           disabled={isPending}
                           className={cn(
-                            "flex-1 py-2 text-xs font-semibold rounded-lg border transition-all",
+                            "flex-1 rounded-lg border py-2 text-xs font-semibold transition-all",
                             isSelected
-                              ? "bg-accent/10 border-accent/40 text-accent"
+                              ? "bg-accent/10 border-accent/40 bg-accent text-accent-foreground"
                               : "border-border/60 text-muted-foreground hover:bg-muted"
                           )}
                         >
@@ -286,7 +295,7 @@ export function HabitDialog() {
             </div>
 
             {/* Focus Mode Switch */}
-            <div className="flex items-center justify-between border-t border-border/55 pt-4">
+            <div className="border-border/55 flex items-center justify-between border-t pt-4">
               <div className="space-y-0.5">
                 <Label htmlFor="focus-mode" className="text-sm font-semibold text-foreground">
                   Focus Timer Mode
@@ -304,12 +313,16 @@ export function HabitDialog() {
             </div>
 
             {focusMode && (
-              <div className="space-y-2 animate-fade-up">
+              <div className="animate-fade-up space-y-2">
                 <Label htmlFor="focus-duration" className="text-xs font-semibold text-foreground">
                   Timer Duration
                 </Label>
-                <UISelect value={focusDuration} onValueChange={setFocusDuration} disabled={isPending}>
-                  <SelectTrigger id="focus-duration" className="rounded-xl border-border/80">
+                <UISelect
+                  value={focusDuration}
+                  onValueChange={setFocusDuration}
+                  disabled={isPending}
+                >
+                  <SelectTrigger id="focus-duration" className="border-border/80 rounded-xl">
                     <SelectValue placeholder="Select duration" />
                   </SelectTrigger>
                   <SelectContent className="rounded-xl font-body">
@@ -325,20 +338,20 @@ export function HabitDialog() {
               </div>
             )}
 
-            <DialogFooter className="pt-2 gap-2">
+            <DialogFooter className="gap-2 pt-2">
               <Button
                 type="button"
                 variant="outline"
                 onClick={handleClose}
                 disabled={isPending}
-                className="font-semibold rounded-xl border-border/80 hover:bg-muted"
+                className="border-border/80 rounded-xl font-semibold hover:bg-muted hover:text-slate-900"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
                 disabled={isPending}
-                className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-xl"
+                className="hover:bg-accent/90 rounded-xl bg-accent font-semibold text-accent-foreground"
               >
                 {isPending ? (
                   <>
