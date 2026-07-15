@@ -144,7 +144,16 @@ export default function DashboardPage() {
                 <h2 className="font-heading text-2xl font-bold tracking-tight text-foreground">
                   Today's Rituals
                 </h2>
-                <p className="font-body text-xs text-muted-foreground">{todayStr}</p>
+                <div className="flex items-center gap-2">
+                  <p className="font-body text-xs text-muted-foreground">{todayStr}</p>
+                  <span className="text-muted-foreground/30 text-xs">•</span>
+                  <Link
+                    href="/habits/archived"
+                    className="hover:text-accent/90 text-xs font-semibold text-accent hover:underline"
+                  >
+                    Archived Rituals
+                  </Link>
+                </div>
               </div>
               <Button
                 onClick={() => setCreateHabitOpen(true)}

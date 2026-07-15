@@ -112,6 +112,47 @@ export function useArchiveHabit() {
     },
     onSuccess: (_, id) => {
       void queryClient.invalidateQueries({ queryKey: HABITS_QUERY_KEY });
+      void queryClient.invalidateQueries({ queryKey: ["habits", "archived"] });
+      void queryClient.invalidateQueries({ queryKey: ["habits", id] });
+      void queryClient.invalidateQueries({ queryKey: ["streak_stats"] });
+    },
+  });
+}
+
+export function useArchivedHabits() {
+  const supabase = createClient() as any;
+
+  return useQuery({
+    queryKey: ["habits", "archived"] as const,
+    queryFn: async (): Promise<Habit[]> => {
+      const { data, error } = await supabase
+        .from("habits")
+        .select("*")
+        .not("archived_at", "is", null)
+        .order("archived_at", { ascending: false });
+
+      if (error) throw new Error(error.message);
+      return (data || []) as Habit[];
+    },
+  });
+}
+
+export function useRestoreHabit() {
+  const supabase = createClient() as any;
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (id: string): Promise<void> => {
+      const { error } = await supabase
+        .from("habits")
+        .update({ archived_at: null })
+        .eq("id", id);
+
+      if (error) throw new Error(error.message);
+    },
+    onSuccess: (_, id) => {
+      void queryClient.invalidateQueries({ queryKey: HABITS_QUERY_KEY });
+      void queryClient.invalidateQueries({ queryKey: ["habits", "archived"] });
       void queryClient.invalidateQueries({ queryKey: ["habits", id] });
       void queryClient.invalidateQueries({ queryKey: ["streak_stats"] });
     },
