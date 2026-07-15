@@ -3,6 +3,8 @@
  * Middleware in middleware.ts handles auth redirect; this layout
  * will add the app shell (nav, sidebar) in later phases.
  */
+import { MilestoneCelebration } from "@/components/features/milestone-celebration";
+
 export default function AppLayout({
   children,
 }: {
@@ -10,8 +12,8 @@ export default function AppLayout({
 }) {
   return (
     <div className="min-h-screen bg-background">
-      {/* App shell nav goes here in Phase 2 */}
       <main>{children}</main>
+      <MilestoneCelebration />
     </div>
   );
 }

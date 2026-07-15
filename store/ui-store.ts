@@ -6,7 +6,7 @@
  */
 import { create } from "zustand";
 
-interface CelebrationItem {
+export interface CelebrationItem {
   habitId: string;
   habitName: string;
   milestoneValue: number;

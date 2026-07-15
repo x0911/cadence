@@ -133,12 +133,72 @@ export function useCheckIn(habitId: string, timezone: string) {
         queryClient.setQueryData(streakStatsKey(habitId), context.prevStreakStats);
       }
     },
+    onSuccess: async (data, vars) => {
+      // If checked in today (vars.isCheckedIn is false, meaning we checked in):
+      if (!vars.isCheckedIn && data) {
+        // Query cache for habit name/color and current streak stats
+        const habits = queryClient.getQueryData<any[]>(["habits"]);
+        const habit = habits?.find((h) => h.id === habitId);
+        const stats = queryClient.getQueryData<any>(streakStatsKey(habitId));
+
+        if (habit && stats) {
+          const prevStreak = stats.currentStreak;
+          const newStreak = prevStreak + 1; // optimistic check
+          const milestones = [7, 30, 100, 365];
+          
+          if (milestones.includes(newStreak)) {
+            // Write milestone record to database
+            const { error: mErr } = await supabase
+              .from("habit_milestones")
+              .insert({
+                habit_id: habitId,
+                milestone_value: newStreak,
+              } as any);
+
+            // If database insert succeeded (no constraint error), enqueue celebration!
+            if (!mErr) {
+              const { useUIStore } = require("@/store/ui-store");
+              useUIStore.getState().enqueueCelebration({
+                habitId,
+                habitName: habit.name,
+                milestoneValue: newStreak,
+                color: habit.color,
+              });
+            }
+          }
+        }
+      }
+    },
     onSettled: () => {
       // Refetch stats and check-ins
       void queryClient.invalidateQueries({ queryKey: checkInsKey(habitId) });
       void queryClient.invalidateQueries({ queryKey: streakStatsKey(habitId) });
       // Invalidate global stats for 3D orb
       void queryClient.invalidateQueries({ queryKey: ["global_streak_stats"] });
+    },
+  });
+}
+
+export function useLogMilestone() {
+  const supabase = createClient() as any;
+  return useMutation({
+    mutationFn: async ({ habitId, milestoneValue }: { habitId: string; milestoneValue: number }) => {
+      const { data, error } = await supabase
+        .from("habit_milestones")
+        .insert({
+          habit_id: habitId,
+          milestone_value: milestoneValue,
+        } as any)
+        .select()
+        .single();
+
+      if (error) {
+        if (error.code === "23505") { // unique constraint violation
+          return null;
+        }
+        throw new Error(error.message);
+      }
+      return data;
     },
   });
 }
