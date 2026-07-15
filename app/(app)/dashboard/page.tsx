@@ -100,8 +100,8 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-[#FAFAFA] pb-16">
       {/* Premium Dashboard Header */}
-      <header className="sticky top-0 z-40 border-b border-border/80 bg-white/80 backdrop-blur-md">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4.5">
+      <header className="border-border/80 sticky top-0 z-40 border-b bg-white/80 backdrop-blur-md">
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
           <div className="flex items-center gap-2">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent text-accent-foreground shadow-sm">
               <Flame className="h-5 w-5" />
@@ -116,7 +116,7 @@ export default function DashboardPage() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-9 w-9 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl"
+                className="h-9 w-9 rounded-xl text-muted-foreground hover:bg-muted hover:text-foreground"
               >
                 <Settings className="h-5 w-5" />
                 <span className="sr-only">Settings</span>
@@ -126,7 +126,7 @@ export default function DashboardPage() {
               variant="ghost"
               size="icon"
               onClick={handleSignOut}
-              className="h-9 w-9 text-muted-foreground hover:text-destructive hover:bg-destructive/5 rounded-xl"
+              className="hover:bg-destructive/5 h-9 w-9 rounded-xl text-muted-foreground hover:text-destructive"
             >
               <LogOut className="h-5 w-5" />
               <span className="sr-only">Sign Out</span>
@@ -148,7 +148,7 @@ export default function DashboardPage() {
               </div>
               <Button
                 onClick={() => setCreateHabitOpen(true)}
-                className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-xl"
+                className="hover:bg-accent/90 rounded-xl bg-accent font-semibold text-accent-foreground"
               >
                 <Plus className="mr-1.5 h-4 w-4" />
                 Add Habit
@@ -179,19 +179,20 @@ export default function DashboardPage() {
                 ))}
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border/80 bg-white p-12 text-center shadow-sm">
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-muted text-muted-foreground/60 mb-4">
+              <div className="border-border/80 flex flex-col items-center justify-center rounded-2xl border border-dashed bg-white p-12 text-center shadow-sm">
+                <div className="text-muted-foreground/60 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-muted">
                   <CheckCircle2 className="h-7 w-7" />
                 </div>
-                <h3 className="font-heading text-lg font-semibold text-foreground mb-1.5">
+                <h3 className="mb-1.5 font-heading text-lg font-semibold text-foreground">
                   No Habits Set Up
                 </h3>
-                <p className="font-body text-sm text-muted-foreground max-w-xs mb-6">
-                  Set up your first daily ritual to start building consistency and growing your Streak Orb.
+                <p className="mb-6 max-w-xs font-body text-sm text-muted-foreground">
+                  Set up your first daily ritual to start building consistency and growing your
+                  Streak Orb.
                 </p>
                 <Button
                   onClick={() => setCreateHabitOpen(true)}
-                  className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-xl"
+                  className="hover:bg-accent/90 rounded-xl bg-accent font-semibold text-accent-foreground"
                 >
                   Create Your First Habit
                 </Button>
@@ -201,15 +202,15 @@ export default function DashboardPage() {
 
           {/* Sidebar Orb Column */}
           <div className="flex flex-col items-center gap-6 md:sticky md:top-24 md:h-fit">
-            <div className="w-full rounded-2xl border border-border/80 bg-white p-6 shadow-sm flex flex-col items-center text-center">
-              <h3 className="font-heading text-sm font-semibold text-muted-foreground mb-4 uppercase tracking-wider">
+            <div className="border-border/80 flex w-full flex-col items-center rounded-2xl border bg-white p-6 text-center shadow-sm">
+              <h3 className="mb-4 font-heading text-sm font-semibold uppercase tracking-wider text-muted-foreground">
                 Streak Consistency
               </h3>
-              
+
               {isLoading ? (
                 <Skeleton className="h-48 w-48 rounded-full" />
               ) : (
-                <div className="flex justify-center items-center h-48 w-48 mb-4">
+                <div className="mb-4 flex h-48 w-48 items-center justify-center">
                   <StreakOrb
                     strengthLevel={globalStats?.strengthLevel || 0}
                     maxStreak={globalStats?.maxStreak || 0}
@@ -219,29 +220,29 @@ export default function DashboardPage() {
                 </div>
               )}
 
-              <Separator className="my-4 bg-border/60" />
+              <Separator className="bg-border/60 my-4" />
 
-              <div className="w-full grid grid-cols-2 gap-4">
-                <div className="text-center p-2 rounded-xl bg-muted/40">
+              <div className="grid w-full grid-cols-2 gap-4">
+                <div className="bg-muted/40 rounded-xl p-2 text-center">
                   <span className="block font-heading text-xl font-bold text-foreground">
                     {isLoading ? "-" : globalStats?.maxStreak || 0}
                   </span>
-                  <span className="font-body text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
+                  <span className="font-body text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                     Best Streak
                   </span>
                 </div>
-                <div className="text-center p-2 rounded-xl bg-muted/40">
+                <div className="bg-muted/40 rounded-xl p-2 text-center">
                   <span className="block font-heading text-xl font-bold text-foreground">
                     {isLoading ? "-" : habits?.length || 0}
                   </span>
-                  <span className="font-body text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
+                  <span className="font-body text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                     Rituals
                   </span>
                 </div>
               </div>
 
               {!isLoading && globalStats && globalStats.maxStreak >= 7 && (
-                <div className="mt-4 flex items-center gap-1.5 rounded-lg bg-accent/5 px-3 py-2 text-xs font-semibold text-accent text-left">
+                <div className="bg-accent/5 mt-4 flex items-center gap-1.5 rounded-lg px-3 py-2 text-left text-xs font-semibold text-accent">
                   <Sparkles className="h-4 w-4 shrink-0" />
                   <span>Consistency is established! Keep going.</span>
                 </div>

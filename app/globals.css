@@ -14,8 +14,13 @@
   --color-background:            #FAFAFA;
   --color-foreground:            #0F172A;
   --color-card:                  #FFFFFF;
+  --color-card-foreground:       #0F172A;
+  --color-popover:               #FFFFFF;
+  --color-popover-foreground:    #0F172A;
   --color-accent:                #059669;
   --color-accent-foreground:     #FFFFFF;
+  --color-secondary:             #F0F4F1;
+  --color-secondary-foreground:  #0F172A;
   --color-muted:                 #F0F4F1;
   --color-muted-foreground:      #64748B;
   --color-border:                #E2E8E4;

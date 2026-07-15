@@ -13,7 +13,14 @@ const config: Config = {
         // Semantic design tokens — never use raw hex in components
         background: "var(--color-background)",
         foreground: "var(--color-foreground)",
-        card: "var(--color-card)",
+        card: {
+          DEFAULT: "var(--color-card)",
+          foreground: "var(--color-card-foreground)",
+        },
+        popover: {
+          DEFAULT: "var(--color-popover)",
+          foreground: "var(--color-popover-foreground)",
+        },
         accent: {
           DEFAULT: "var(--color-accent)",
           foreground: "var(--color-accent-foreground)",
@@ -21,6 +28,10 @@ const config: Config = {
         primary: {
           DEFAULT: "var(--color-accent)",
           foreground: "var(--color-accent-foreground)",
+        },
+        secondary: {
+          DEFAULT: "var(--color-secondary)",
+          foreground: "var(--color-secondary-foreground)",
         },
         muted: {
           DEFAULT: "var(--color-muted)",
